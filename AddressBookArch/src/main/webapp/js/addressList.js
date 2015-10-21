@@ -31,7 +31,7 @@ function loadAddresss() {
                                             address.lastName)
                                     ) // ends the <a> tag
                             ) // ends the <td> tag for the address name
-                    .append($('<td>').text(address.company))
+                    .append($('<td>').text(address.address))
                     .append($('<td>')
                             .append($('<a>')
                                     .attr({
@@ -60,6 +60,44 @@ function loadAddresss() {
 function clearAddressTable() {
     $('#contentRows').empty();
 }
+
+// on click for our add button
+$('#add-button').click(function (event) {
+// we don’t want the button to actually submit
+// we'll handle data submission via ajax
+    event.preventDefault();
+// Make an Ajax call to the server. HTTP verb = POST, URL = contact
+    $.ajax({
+        type: 'POST',
+        url: 'address',
+// Build a JSON object from the data in the form
+        data: JSON.stringify({
+            firstName: $('#add-first-name').val(),
+            lastName: $('#add-last-name').val(),
+            address: $('#add-address').val(),
+            city: $('#add-city').val(),
+            state: $('#add-state').val(),
+            zip: $('#add-zip').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
+// If the call succeeds, clear the form and reload the summary table
+
+        $('#add-first-name').val('');
+        $('#add-last-name').val('');
+        $('#add-address').val('');
+        $('#add-city').val('');
+        $('#add-state').val('');
+        $('#add-zip').val('');
+        loadAddresss();
+//return false;
+    });
+});
+
 // This code runs in response to show.bs.modal event for the details Modal
 $('#detailsModal').on('show.bs.modal', function (event) {
 // get the element that triggered the event
@@ -120,10 +158,10 @@ $('#edit-button').click(function (event) {
             addressId: $('#edit-address-id').val(),
             firstName: $('#edit-first-name').val(),
             lastName: $('#edit-last-name').val(),
-            company: $('#edit-address').val(),
-            phone: $('#edit-city').val(),
-            phone: $('#edit-state').val(),
-            email: $('#edit-zip').val()
+            address: $('#edit-address').val(),
+            city: $('#edit-city').val(),
+            state: $('#edit-state').val(),
+            zip: $('#edit-zip').val()
         }),
         headers: {
             'Accept': 'application/json',

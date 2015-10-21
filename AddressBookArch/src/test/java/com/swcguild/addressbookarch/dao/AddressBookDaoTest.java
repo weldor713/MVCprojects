@@ -43,7 +43,7 @@ public class AddressBookDaoTest {
     public void setUp() {
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
-        dao = ctx.getBean("addressBookDao", AddressBookDao.class);
+        dao = ctx.getBean("addressbookDao", AddressBookDao.class);
     }
 
     @After

@@ -15,14 +15,17 @@
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <style type="text/css">
-            .bs-example{
-                margin: 20px;
-            }
             h1{
-                background-color:lightgray;
+                /*background-color:lightcoral;*/
+                text-align: center;
+                border-radius: 25px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            #topbar {
+                margin-top: 20px;
+                padding-top: 10px;
             }
         </style>
 
@@ -41,9 +44,10 @@
     </head>
     <body>
         <div class="container">
-            <h1>Address Book</h1>
-            <hr>
-            <div>
+            <h1 class = "col-md-offset-3 col-md-6">Address Book</h1>
+            <br><br>
+            
+            <div id="topbar">
                 <%@include file="addressheader.jsp" %>
             </div>
         </div>

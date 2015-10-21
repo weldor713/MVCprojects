@@ -15,8 +15,6 @@
     <head>
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
         <style type="text/css">
             h1{
                 /*background-color:lightcoral;*/
@@ -70,9 +68,9 @@
             <div class="row">
                 <div class="col-md-offset-2 col-md-8">
                     <h2>Addresses</h2>
-                    <table id="contactTable" class="table table-hover">
+                    <table id="addressTable" class="table table-hover">
                         <tr>
-                            <th width="40%">ContactName</th>
+                            <th width="40%">Name</th>
                             <th width="30%">Address</th>
                             <th width="15%"></th>
                             <th width="15%"></th>
@@ -144,7 +142,7 @@
                                 <button type="submit"
                                         id ="add-button"
                                         class="btn btn-default">
-                                    Create Contact
+                                    Create Address
                                 </button>
                             </div>
 
@@ -170,35 +168,35 @@
                             <span aria-hidden="true">&times;</span>
                             <span class="sr-only">Close</span>
                         </button>
-                        <h4 class="modal-title" id="detailsModalLabel">Contact
+                        <h4 class="modal-title" id="detailsModalLabel">Address
                             Details</h4>
                     </div>
                     <div class="modal-body">
-                        <h3 id="contact-id"></h3>
+                        <h3 id="address-id"></h3>
                         <table class="table table-bordered">
                             <tr>
                                 <th>First Name:</th>
-                                <td id="contact-firstName"></td>
+                                <td id="address-firstName"></td>
                             </tr>
                             <tr>
                                 <th>Last Name:</th>
-                                <td id="contact-lastName"></td>
+                                <td id="address-lastName"></td>
                             </tr>
                             <tr>
                                 <th>Address:</th>
-                                <td id="contact-address"></td>
+                                <td id="address-address"></td>
                             </tr>
                             <tr>
                                 <th>City:</th>
-                                <td id="contact-city"></td>
+                                <td id="address-city"></td>
                             </tr>
                             <tr>
                                 <th>State:</th>
-                                <td id="contact-state"></td>
+                                <td id="address-state"></td>
                             </tr>  
                             <tr>
                                 <th>Zip:</th>
-                                <td id="contact-zip"></td>
+                                <td id="address-zip"></td>
                             </tr>  
                         </table>
                     </div>
@@ -221,10 +219,10 @@
                             <span aria-hidden="true">&times;</span>
                             <span class="sr-only">Close</span></button>
                         <h4 class="modal-title" id="detailsModalLabel">Edit
-                            Contact</h4>
+                            Address</h4>
                     </div>
                     <div class="modal-body">
-                        <h3 id="contact-id"></h3>
+                        <h3 id="address-id"></h3>
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label for="edit-first-name" class="col-md-4 control-label">
@@ -284,13 +282,13 @@
                                 <div class="col-md-offset-4 col-md-8">
                                     <button type="submit" id="edit-button" class="btn btn-default"
                                             data-dismiss="modal">
-                                        Edit Contact
+                                        Edit Address
                                     </button>
                                     <button type="button" class="btn btn-default"
                                             data-dismiss="modal">
                                         Cancel
                                     </button>
-                                    <input type="hidden" id="edit-contact-id">
+                                    <input type="hidden" id="edit-address-id">
                                 </div>
                             </div>
                         </form>

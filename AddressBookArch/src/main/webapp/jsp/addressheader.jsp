@@ -38,13 +38,10 @@ and open the template in the editor.
                         <div id="navbarCollapse" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li role="presentation" class="active">
-                                    <a href="${pageContext.request.contextPath}/home">Home</a>
+                                    <a href="${pageContext.request.contextPath}/home">Home/List All</a>
                                 </li>
                                 <li role="presentation">
                                     <a href="${pageContext.request.contextPath}/add">Add Address</a>
-                                </li>
-                                <li role="presentation">
-                                    <a href="${pageContext.request.contextPath}/listall">List All Addresses</a>
                                 </li>
                                 <li class ="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
