@@ -1,137 +1,177 @@
 // Document ready function
 $(document).ready(function () {
-    loadContacts();
+    loadDvds();
 });
 //==========
 // FUNCTIONS
 //==========
-// Load contacts into the summary table
-function loadContacts() {
+// Load dvds into the summary table
+function loadDvds() {
 // clear the previous list
-    clearContactTable();
-// grab the tbody element that will hold the new list of contacts
+    clearDvdTable();
+// grab the tbody element that will hold the new list of dvds
     var cTable = $('#contentRows');
-// Iterate through each of the JSON objects in the test contact data
-// and render to the summary table
-    $.each(testContactData, function (index, contact) {
-        cTable.append($('<tr>')
-                .append($('<td>')
-                        .append($('<a>')
-                                .attr({
-                                    'data-contact-id': contact.contactId,
-                                    'data-toggle': 'modal',
-                                    'data-target': '#detailsModal'
-                                })
-                                .text(contact.title)
-                                ) // ends the <a> tag
-                        ) // ends the <td> tag for the contact name
-                .append($('<td>').text(contact.studio))
-                .append($('<td>')
-                        .append($('<a>')
-                                .attr({
-                                    'data-contact-id': contact.contactId,
-                                    'data-toggle': 'modal',
-                                    'data-target': '#editModal'
-                                })
-                                .text('Edit')
-                                ) // ends the <a> tag
-                        ) // ends the <td> tag for Edit
-                .append($('<td>').text('Delete'))
-                );
+// Make an Ajax GET call to the 'dvds' endpoint. Iterate through
+// each of the JSON objects that are returned and render them to the
+// summary table.
+    $.ajax({
+        url: "dvds"
+    }).success(function (data, status) {
+        $.each(data, function (index, dvd) {
+            cTable.append($('<tr>')
+                    .append($('<td>')
+                            .append($('<a>')
+                                    .attr({
+                                        'data-dvd-id': dvd.dvdId,
+                                        'data-toggle': 'modal',
+                                        'data-target': '#detailsModal'
+                                    })
+                                    .text(dvd.title + ' ' +
+                                            dvd.director)
+                                    ) // ends the <a> tag
+                            ) // ends the <td> tag for the dvd name
+                    .append($('<td>').text(dvd.releasedate))
+                    .append($('<td>')
+                            .append($('<a>')
+                                    .attr({
+                                        'data-dvd-id': dvd.dvdId,
+                                        'data-toggle': 'modal',
+                                        'data-target': '#editModal'
+                                    })
+                                    .text('Edit')
+                                    ) // ends the <a> tag
+                            ) // ends the <td> tag for Edit
+                    .append($('<td>')
+                            .append($('<a>')
+                                    .attr({
+                                        'onClick': 'deleteDvd(' +
+                                                dvd.dvdId + ')'
+                                    })
+                                    .text('Delete')
+                                    ) // ends the <a> tag
+                            ) // ends the <td> tag for Delete
+                    ); // ends the <tr> for this Dvd
+        }); // ends the 'each' function
     });
 }
 // Clear all content rows from the summary table
-function clearContactTable() {
+function clearDvdTable() {
     $('#contentRows').empty();
 }
 
-// This code runs in response to the show.bs.modal event - it gets the correct
-// contact data and renders it to the dialog
+// on click for our add button
+$('#add-button').click(function (event) {
+// we don’t want the button to actually submit
+// we'll handle data submission via ajax
+    event.preventDefault();
+// Make an Ajax call to the server. HTTP verb = POST, URL = dvd
+    $.ajax({
+        type: 'POST',
+        url: 'dvd',
+// Build a JSON object from the data in the form
+        data: JSON.stringify({
+            title: $('#add-title').val(),
+            director: $('#add-director').val(),
+            releasedate: $('#add-releasedate').val(),
+            mpaarating: $('#add-mpaarating').val(),
+            studio: $('#add-studio').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
+// If the call succeeds, clear the form and reload the summary table
+
+        $('#add-title').val('');
+        $('#add-director').val('');
+        $('#add-releasedate').val('');
+        $('#add-mpaarating').val('');
+        $('#add-studio').val('');
+        loadDvds();
+//return false;
+    });
+});
+
+// This code runs in response to show.bs.modal event for the details Modal
 $('#detailsModal').on('show.bs.modal', function (event) {
-// Get the element that triggered this event - in our case it is a contact
-// name link in the summary table. This link has an attribute that contains
-// the contactId for the given contact. We'll use that to retrieve the
-// contact's details.
+// get the element that triggered the event
     var element = $(event.relatedTarget);
-// grab the contact id
-    var contactId = element.data('contact-id');
-// PLACEHOLDER: Eventually we'll make an ajax call to the server to get the
-//details for this contact but for now we'll load the dummy
-//data
-
+    var dvdId = element.data('dvd-id');
     var modal = $(this);
-    modal.find('#contact-id').text(dummyDetailsContact.contactId);
-    modal.find('#contact-title').text(dummyDetailsContact.title);
-    modal.find('#contact-director').text(dummyDetailsContact.director);
-    modal.find('#contact-releasedate').text(dummyDetailsContact.releasedate);
-    modal.find('#contact-studio').text(dummyDetailsContact.studio);
-    modal.find('#contact-mpaarating').text(dummyDetailsContact.mpaarating);
+// make an ajax call to get dvd information for given dvd id
+// this is a GET request to dvd/{id}
+// upon success, put the returned JSON data into the modal dialog
+    $.ajax({
+        type: 'GET',
+        url: 'dvd/' + dvdId
+    }).success(function (dvd) {
+        modal.find('#dvd-id').text(dvd.dvdId);
+        modal.find('#dvd-title').text(dvd.title);
+        modal.find('#dvd-director').text(dvd.director);
+        modal.find('#dvd-releasedate').text(dvd.releasedate);
+        modal.find('#dvd-mpaarating').text(dvd.mpaarating);
+        modal.find('#dvd-studio').text(dvd.studio);
+    });
 });
 
-// This code runs in response to the show.bs.modal event - it gets the correct
-// contact data and renders it to the dialog
+// This code runs in response to the show.hs.modal event for the edit Modal
 $('#editModal').on('show.bs.modal', function (event) {
-// Get the element that triggered this event - in our case it is a contact
-// name link in the summary table. This link has an attribute that contains
-// the contactId for the given contact. We'll use that to retrieve the
-// contact's details.
-var element = $(event.relatedTarget);
-// Grab the contact id
-var contactId = element.data('contact-id');
-// PLACEHOLDER: Eventually we'll make an ajax call to the server to get the
-//details for this contact but for now we'll load the dummy
-//data
-
-var modal = $(this);
-modal.find('#contact-id').text(dummyEditContact.contactId);
-modal.find('#edit-title').val(dummyEditContact.title);
-modal.find('#edit-director').val(dummyEditContact.director);
-modal.find('#edit-releasedate').val(dummyEditContact.releasedate);
-modal.find('#edit-studio').val(dummyEditContact.studio);
-modal.find('#edit-mpaarating').val(dummyEditContact.mpaarating);
+    var element = $(event.relatedTarget);
+    var dvdId = element.data('dvd-id');
+    var modal = $(this);
+    $.ajax({
+        type: 'GET',
+        url: 'dvd/' + dvdId
+    }).success(function (dvd) {
+        modal.find('#dvd-id').text(dvd.dvdId);
+        modal.find('#edit-dvd-id').val(dvd.dvdId);
+        modal.find('#edit-title').val(dvd.title);
+        modal.find('#edit-director').val(dvd.director);
+        modal.find('#edit-releasedate').val(dvd.releasedate);
+        modal.find('#edit-mpaarating').val(dvd.mpaarating);
+        modal.find('#edit-studio').val(dvd.studio);
+    });
 });
 
-// TEST DATA
-var testContactData = [
-    {
-        contactId: 1,
-        title: "Star Wars",
-        director: "George Lucas",
-        releasedate: "25-05-1977",
-        mpaarating: "PG",
-        studio: "Twentieth Century Fox"},
-    {
-        contactId: 2,
-        title: "Dawn of the Dead",
-        director: "George Romero",
-        releasedate: "25-05-1979",
-        mpaarating: "NR",
-        studio: "United Films"},
-    {
-        contactId: 3,
-        title: "Shaun of the Dead",
-        director: "Edgar Wright",
-        releasedate: "24-09-2004",
-        mpaarating: "R",
-        studio: "Universal Pictures"}
-];
+// onclick handler for edit button
+$('#edit-button').click(function (event) {
+// prevent the button press from submitting the whole page
+    event.preventDefault();
+// Ajax call -
+// Method - PUT
+// URL - dvd/{id}
+// Just reload all of the Dvds upon success
+    $.ajax({
+        type: 'PUT',
+        url: 'dvd/' + $('#edit-dvd-id').val(),
+        data: JSON.stringify({
+            dvdId: $('#edit-dvd-id').val(),
+            title: $('#edit-title').val(),
+            director: $('#edit-director').val(),
+            releasedate: $('#edit-releasedate').val(),
+            studio: $('#edit-studio').val(),
+            mpaarating: $('#edit-mpaarating').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function () {
+        loadDvds();
+    });
+});
 
-var dummyDetailsContact =
-        {
-            contactId: 12,
-            title: "The Muppet Movie",
-            director: "James Frawley",
-            releasedate: "22-07-1979",
-            mpaarating: "G",
-            studio: "Associated Film Distribution"
-        };
-
-var dummyEditContact =
-        {
-            contactId: 13,
-            title: "Mad Max",
-            director: "George Miller",
-            releasedate: "12-04-1979",
-            mpaarating: "R",
-            studio: "Columbia"
-        };
+function deleteDvd(id) {
+    var answer = confirm("Do you really want to delete this dvd?");
+    if (answer === true) {
+        $.ajax({
+            type: 'DELETE',
+            url: 'dvd/' + id
+        }).success(function () {
+            loadDvds();
+        });
+    }
+}
