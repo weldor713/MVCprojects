@@ -89,10 +89,10 @@ public class DvdListDaoInMemImpl implements DvdListDao {
                 : (c) -> c.getDirector().equals(directorCriteria);
         releasedateMatches = (releasedateCriteria == null || releasedateCriteria.isEmpty())
                 ? truePredicate
-                : (c) -> c.getReleaseDate().equals(releasedateCriteria);
+                : (c) -> c.getReleasedate().equals(releasedateCriteria);
         mpaaratingMatches = (mpaaratingCriteria == null || mpaaratingCriteria.isEmpty())
                 ? truePredicate
-                : (c) -> c.getMpaaRating().equals(mpaaratingCriteria);
+                : (c) -> c.getMpaarating().equals(mpaaratingCriteria);
         studioMatches = (studioCriteria == null || studioCriteria.isEmpty())
                 ? truePredicate
                 : (c) -> c.getStudio().equals(studioCriteria);

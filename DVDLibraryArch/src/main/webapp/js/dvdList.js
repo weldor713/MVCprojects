@@ -60,39 +60,38 @@ function clearDvdTable() {
 }
 
 // on click for our add button
-$('#add-button').click(function (event) {
+    $('#add-button').click(function (event) {
 // we don’t want the button to actually submit
 // we'll handle data submission via ajax
-    event.preventDefault();
-// Make an Ajax call to the server. HTTP verb = POST, URL = dvd
-    $.ajax({
-        type: 'POST',
-        url: 'dvd',
-// Build a JSON object from the data in the form
-        data: JSON.stringify({
-            title: $('#add-title').val(),
-            director: $('#add-director').val(),
-            releasedate: $('#add-releasedate').val(),
-            mpaarating: $('#add-mpaarating').val(),
-            studio: $('#add-studio').val()
-        }),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        'dataType': 'json'
-    }).success(function (data, status) {
-// If the call succeeds, clear the form and reload the summary table
-
-        $('#add-title').val('');
-        $('#add-director').val('');
-        $('#add-releasedate').val('');
-        $('#add-mpaarating').val('');
-        $('#add-studio').val('');
-        loadDvds();
-//return false;
+        event.preventDefault();
+// Make an Ajax call to the server. HTTP verb = POST, URL = dvd 
+        $.ajax({
+            type: 'POST',
+            url: 'dvd',
+// Build a JSON object from the data in the form 
+            data: JSON.stringify({
+                title: $('#add-title').val(),
+                director: $('#add-director').val(),
+                releasedate: $('#add-releasedate').val(),
+                mpaarating: $('#add-mpaarating').val(),
+                studio: $('#add-studio').val()
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'dataType': 'json'
+        }).success(function (data, status) {
+// If the call succeeds, clear the form and reload the summary
+            $('#add-title').val('');
+            $('#add-director').val('');
+            $('#add-releasedate').val('');
+            $('#add-mpaarating').val('');
+            $('#add-studio').val('');
+            loadDvds();
+            //return false;
+        });
     });
-});
 
 // This code runs in response to show.bs.modal event for the details Modal
 $('#detailsModal').on('show.bs.modal', function (event) {
@@ -151,8 +150,9 @@ $('#edit-button').click(function (event) {
             title: $('#edit-title').val(),
             director: $('#edit-director').val(),
             releasedate: $('#edit-releasedate').val(),
-            studio: $('#edit-studio').val(),
-            mpaarating: $('#edit-mpaarating').val()
+            mpaarating: $('#edit-mpaarating').val(),
+            studio: $('#edit-studio').val()
+
         }),
         headers: {
             'Accept': 'application/json',

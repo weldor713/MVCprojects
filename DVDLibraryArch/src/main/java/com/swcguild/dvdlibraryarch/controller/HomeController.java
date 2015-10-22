@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
 /**
  *
  * @author AGallagher
  */
 @Controller
-
 public class HomeController {
 
     private DvdListDao dao;
@@ -41,23 +39,19 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/dvd/{id}", method = RequestMethod.GET)
-
     @ResponseBody
     public Dvd getDvd(@PathVariable("id") int id) {
 // retrieve the Dvd associated with the given id and return it
         return dao.getDvdById(id);
-
     }
 
     @RequestMapping(value = "/dvd", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Dvd createDvd(@Valid @RequestBody Dvd dvd) {
-// persist the incoming dvd
+        // persist the incoming dvd
         dao.addDvd(dvd);
-// The addDvd call to the dao assigned a dvdId to the incoming
-// Dvd and set that value on the object. Now we return the updated
-// object to the caller.
+// The addDvd call to the dao assigned a dvdId to the incoming // Dvd and set that value on the object. Now we return the updated // object to the caller.
         return dvd;
     }
 
@@ -88,5 +82,3 @@ public class HomeController {
     }
 
 }
-
-

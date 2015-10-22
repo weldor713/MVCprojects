@@ -45,11 +45,11 @@ public class Dvd {
         this.director = director;
     }
 
-    public String getReleaseDate() {
+    public String getReleasedate() {
         return releasedate;
     }
 
-    public void setReleaseDate(String releasedate) {
+    public void setReleasedate(String releasedate) {
         this.releasedate = releasedate;
     }
 
@@ -61,11 +61,11 @@ public class Dvd {
         this.studio = studio;
     }
 
-    public String getMpaaRating() {
+    public String getMpaarating() {
         return mpaarating;
     }
 
-    public void setMpaaRating(String mpaarating) {
+    public void setMpaarating(String mpaarating) {
         this.mpaarating = mpaarating;
     }
 
@@ -76,8 +76,8 @@ public class Dvd {
         hash = 37 * hash + Objects.hashCode(this.title);
         hash = 37 * hash + Objects.hashCode(this.director);
         hash = 37 * hash + Objects.hashCode(this.releasedate);
-        hash = 37 * hash + Objects.hashCode(this.studio);
         hash = 37 * hash + Objects.hashCode(this.mpaarating);
+        hash = 37 * hash + Objects.hashCode(this.studio);
         return hash;
     }
 
@@ -102,10 +102,10 @@ public class Dvd {
         if (!Objects.equals(this.releasedate, other.releasedate)) {
             return false;
         }
-        if (!Objects.equals(this.studio, other.studio)) {
+        if (!Objects.equals(this.mpaarating, other.mpaarating)) {
             return false;
         }
-        if (!Objects.equals(this.mpaarating, other.mpaarating)) {
+        if (!Objects.equals(this.studio, other.studio)) {
             return false;
         }
         return true;
