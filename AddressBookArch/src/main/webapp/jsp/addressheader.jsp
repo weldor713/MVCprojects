@@ -15,10 +15,8 @@ and open the template in the editor.
             .bs-example{
                 margin: 20px;
             }
-            h1{
-                background-color:lightgray;
-            }
-        </style></head>
+        </style>
+    </head>
     <body>
         <div class = "container" >
             <div class="row" >

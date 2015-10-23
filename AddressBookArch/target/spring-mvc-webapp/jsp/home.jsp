@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
         <style type="text/css">
             h1{
-                /*background-color:lightcoral;*/
+                background-color:lightcoral;
                 text-align: center;
                 border-radius: 25px;
                 padding-top: 10px;

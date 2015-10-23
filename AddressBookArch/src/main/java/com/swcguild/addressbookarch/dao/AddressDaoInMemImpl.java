@@ -56,60 +56,126 @@ public class AddressDaoInMemImpl implements AddressBookDao {
     public Address getAddressById(int addressId) {
         return addressMap.get(addressId);
     }
-
+    
     @Override
-    public List<Address> searchAddresss(Map<SearchTerm, String> criteria) {
-// Get all the search terms from the map
-        String firstNameCriteria = criteria.get(SearchTerm.FIRST_NAME);
-        String lastNameCriteria = criteria.get(SearchTerm.LAST_NAME);
-        String addressCriteria = criteria.get(SearchTerm.ADDRESS);
+    public List<Address> searchByCity(Map<SearchTerm, String> criteria) {
         String cityCriteria = criteria.get(SearchTerm.CITY);
-        String stateCriteria = criteria.get(SearchTerm.STATE);
-        String zipCriteria = criteria.get(SearchTerm.ZIP);
-
-// Declare all the predicate conditions
-        Predicate<Address> firstNameMatches;
-        Predicate<Address> lastNameMatches;
-        Predicate<Address> addressMatches;
         Predicate<Address> cityMatches;
-        Predicate<Address> stateMatches;
-        Predicate<Address> zipMatches;
-
-// Placeholder predicate - always returns true. Used for search terms
-// that are empty
         Predicate<Address> truePredicate = (c) -> {
             return true;
         };
-// Assign values to predicates. If a given search term is empty, just
-// assign the default truePredicate, otherwise assign the predicate that
-// properly filters for the given term.
-        firstNameMatches = (firstNameCriteria == null || firstNameCriteria.isEmpty())
-                ? truePredicate
-                : (c) -> c.getFirstName().equals(firstNameCriteria);
-        lastNameMatches = (lastNameCriteria == null || lastNameCriteria.isEmpty())
-                ? truePredicate
-                : (c) -> c.getLastName().equals(lastNameCriteria);
-        addressMatches = (addressCriteria == null || addressCriteria.isEmpty())
-                ? truePredicate
-                : (c) -> c.getAddress().equals(addressCriteria);
+        
         cityMatches = (cityCriteria == null || cityCriteria.isEmpty())
                 ? truePredicate
                 : (c) -> c.getCity().equals(cityCriteria);
+         return addressMap.values().stream()
+                .filter(cityMatches)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<Address> searchByLastName(Map<SearchTerm, String> criteria) {
+        String lastnameCriteria = criteria.get(SearchTerm.LAST_NAME);
+        Predicate<Address> lastnameMatches;
+        Predicate<Address> truePredicate = (c) -> {
+            return true;
+        };
+        
+        lastnameMatches = (lastnameCriteria == null || lastnameCriteria.isEmpty())
+                ? truePredicate
+                : (c) -> c.getLastName().equals(lastnameCriteria);
+         return addressMap.values().stream()
+                .filter(lastnameMatches)
+                .collect(Collectors.toList());
+    }
+    
+     @Override
+    public List<Address> searchByState(Map<SearchTerm, String> criteria) {
+        String stateCriteria = criteria.get(SearchTerm.STATE);
+        Predicate<Address> stateMatches;
+        Predicate<Address> truePredicate = (c) -> {
+            return true;
+        };
+        
         stateMatches = (stateCriteria == null || stateCriteria.isEmpty())
                 ? truePredicate
                 : (c) -> c.getState().equals(stateCriteria);
+         return addressMap.values().stream()
+                .filter(stateMatches)
+                .collect(Collectors.toList());
+    }
+    
+     @Override
+    public List<Address> searchByZip(Map<SearchTerm, String> criteria) {
+        String zipCriteria = criteria.get(SearchTerm.ZIP);
+        Predicate<Address> zipMatches;
+        Predicate<Address> truePredicate = (c) -> {
+            return true;
+        };
+        
         zipMatches = (zipCriteria == null || zipCriteria.isEmpty())
                 ? truePredicate
                 : (c) -> c.getZip().equals(zipCriteria);
-// Return the list of Addresss that match the given criteria. To do this we
-// just AND all the predicates together in a filter operation.
-        return addressMap.values().stream()
-                .filter(firstNameMatches
-                        .and(lastNameMatches)
-                        .and(addressMatches)
-                        .and(cityMatches)
-                        .and(stateMatches)
-                        .and(zipMatches))
+         return addressMap.values().stream()
+                .filter(zipMatches)
                 .collect(Collectors.toList());
     }
 }
+    
+
+//    @Override
+//    public List<Address> searchAddresss(Map<SearchTerm, String> criteria) {
+//// Get all the search terms from the map
+//        String firstNameCriteria = criteria.get(SearchTerm.FIRST_NAME);
+//        String lastNameCriteria = criteria.get(SearchTerm.LAST_NAME);
+//        String addressCriteria = criteria.get(SearchTerm.ADDRESS);
+//        String cityCriteria = criteria.get(SearchTerm.CITY);
+//        String stateCriteria = criteria.get(SearchTerm.STATE);
+//        String zipCriteria = criteria.get(SearchTerm.ZIP);
+//
+//// Declare all the predicate conditions
+//        Predicate<Address> firstNameMatches;
+//        Predicate<Address> lastNameMatches;
+//        Predicate<Address> addressMatches;
+//        Predicate<Address> cityMatches;
+//        Predicate<Address> stateMatches;
+//        Predicate<Address> zipMatches;
+//
+//// Placeholder predicate - always returns true. Used for search terms
+//// that are empty
+//        Predicate<Address> truePredicate = (c) -> {
+//            return true;
+//        };
+//// Assign values to predicates. If a given search term is empty, just
+//// assign the default truePredicate, otherwise assign the predicate that
+//// properly filters for the given term.
+//        firstNameMatches = (firstNameCriteria == null || firstNameCriteria.isEmpty())
+//                ? truePredicate
+//                : (c) -> c.getFirstName().equals(firstNameCriteria);
+//        lastNameMatches = (lastNameCriteria == null || lastNameCriteria.isEmpty())
+//                ? truePredicate
+//                : (c) -> c.getLastName().equals(lastNameCriteria);
+//        addressMatches = (addressCriteria == null || addressCriteria.isEmpty())
+//                ? truePredicate
+//                : (c) -> c.getAddress().equals(addressCriteria);
+//        cityMatches = (cityCriteria == null || cityCriteria.isEmpty())
+//                ? truePredicate
+//                : (c) -> c.getCity().equals(cityCriteria);
+//        stateMatches = (stateCriteria == null || stateCriteria.isEmpty())
+//                ? truePredicate
+//                : (c) -> c.getState().equals(stateCriteria);
+//        zipMatches = (zipCriteria == null || zipCriteria.isEmpty())
+//                ? truePredicate
+//                : (c) -> c.getZip().equals(zipCriteria);
+//// Return the list of Addresss that match the given criteria. To do this we
+//// just AND all the predicates together in a filter operation.
+//        return addressMap.values().stream()
+//                .filter(firstNameMatches
+//                        .and(lastNameMatches)
+//                        .and(addressMatches)
+//                        .and(cityMatches)
+//                        .and(stateMatches)
+//                        .and(zipMatches))
+//                .collect(Collectors.toList());
+//    }
+//}

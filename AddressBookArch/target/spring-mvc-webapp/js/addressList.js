@@ -7,60 +7,188 @@ $(document).ready(function () {
 //==========
 // Load addresss into the summary table
 function loadAddresss() {
+// Make an Ajax GET call to the 'addresss' endpoint. Iterate through
+// each of the JSON objects that are returned and render them to the
+// summary table
+    $.ajax({
+        url: "addresss"
+    }).success(function (data, status) {
+        fillAddressTable(data, status);
+    });
+}
 
+
+function fillAddressTable(addressList, status) {
 // clear the previous list
     clearAddressTable();
 // grab the tbody element that will hold the new list of addresss
     var cTable = $('#contentRows');
-// Make an Ajax GET call to the 'addresss' endpoint. Iterate through
-// each of the JSON objects that are returned and render them to the
-// summary table.
-    $.ajax({
-        url: "addresss"
-    }).success(function (data, status) {
-        $.each(data, function (index, address) {
-            cTable.append($('<tr>')
-                    .append($('<td>')
-                            .append($('<a>')
-                                    .attr({
-                                        'data-address-id': address.addressId,
-                                        'data-toggle': 'modal',
-                                        'data-target': '#detailsModal'
-                                    })
-                                    .text(address.firstName + ' ' +
-                                            address.lastName)
-                                    ) // ends the <a> tag
-                            ) // ends the <td> tag for the address name
-                    .append($('<td>').text(address.address))
-                    .append($('<td>')
-                            .append($('<a>')
-                                    .attr({
-                                        'data-address-id': address.addressId,
-                                        'data-toggle': 'modal',
-                                        'data-target': '#editModal'
-                                    })
-                                    .text('Edit')
-                                    ) // ends the <a> tag
-                            ) // ends the <td> tag for Edit
-                    .append($('<td>')
-                            .append($('<a>')
-                                    .attr({
-                                        'onClick': 'deleteAddress(' +
-                                                address.addressId + ')'
-                                    })
-                                    .text('Delete')
-                                    ) // ends the <a> tag
-                            ) // ends the <td> tag for Delete
-                    ); // ends the <tr> for this Address
-        }); // ends the 'each' function
-    });
-
+// render the new address data to the table
+    $.each(addressList, function (index, address) {
+        cTable.append($('<tr>')
+                .append($('<td>')
+                        .append($('<a>')
+                                .attr({
+                                    'data-address-id': address.addressId,
+                                    'data-toggle': 'modal',
+                                    'data-target': '#detailsModal'
+                                })
+                                .text(address.firstName + ' ' +address.lastName)
+                                ) // ends the <a> tag
+                        ) // ends the <td> tag for the address name
+                .append($('<td>').text(address.address))
+                .append($('<td>')
+                        .append($('<a>')
+                                .attr({
+                                    'data-address-id': address.addressId,
+                                    'data-toggle': 'modal',
+                                    'data-target': '#editModal'
+                                })
+                                .text('Edit')
+                                ) // ends the <a> tag
+                        ) // ends the <td> tag for Edit
+                .append($('<td>')
+                        .append($('<a>')
+                                .attr({
+                                    'onClick': 'deleteAddress(' +
+                                            address.addressId + ')'
+                                })
+                                .text('Delete')
+                                ) // ends the <a> tag
+                        ) // ends the <td> tag for Delete
+                ); // ends the <tr> for this Address
+    }); // ends the 'each' function
 }
+
 // Clear all content rows from the summary table
 function clearAddressTable() {
     $('#contentRows').empty();
 }
 
+    // on click for our search button
+$('#search-button-city').click(function (event) {
+// we don’t want the button to actually submit
+// we'll handle data submission via ajax
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: 'bycity/address',
+        data: JSON.stringify({
+            firstName: $('#search-first-name').val(),
+            lastName: $('#search-last-name').val(),
+            address: $('#search-address').val(),
+            city: $('#search-city').val(),
+            state: $('#search-state').val(),
+            zip: $('#search-zip').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
+        $('#search-first-name').val('');
+        $('#search-last-name').val('');
+        $('#search-address').val('');
+        $('#search-city').val('');
+        $('#search-state').val('');
+        $('#search-zip').val('');
+        fillAddressTable(data, status);
+    });
+});
+
+$('#search-button-last-name').click(function (event) {
+// we don’t want the button to actually submit
+// we'll handle data submission via ajax
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: 'bylastname/address',
+        data: JSON.stringify({
+            firstName: $('#search-first-name').val(),
+            lastName: $('#search-last-name').val(),
+            address: $('#search-address').val(),
+            city: $('#search-city').val(),
+            state: $('#search-state').val(),
+            zip: $('#search-zip').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
+        $('#search-first-name').val('');
+        $('#search-last-name').val('');
+        $('#search-address').val('');
+        $('#search-city').val('');
+        $('#search-state').val('');
+        $('#search-zip').val('');
+        fillAddressTable(data, status);
+    });
+});
+
+$('#search-button-state').click(function (event) {
+// we don’t want the button to actually submit
+// we'll handle data submission via ajax
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: 'bystate/address',
+        data: JSON.stringify({
+            firstName: $('#search-first-name').val(),
+            lastName: $('#search-last-name').val(),
+            address: $('#search-address').val(),
+            city: $('#search-city').val(),
+            state: $('#search-state').val(),
+            zip: $('#search-zip').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
+        $('#search-first-name').val('');
+        $('#search-last-name').val('');
+        $('#search-address').val('');
+        $('#search-city').val('');
+        $('#search-state').val('');
+        $('#search-zip').val('');
+        fillAddressTable(data, status);
+    });
+});
+
+$('#search-button-zip').click(function (event) {
+// we don’t want the button to actually submit
+// we'll handle data submission via ajax
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: 'byzip/address',
+        data: JSON.stringify({
+            firstName: $('#search-first-name').val(),
+            lastName: $('#search-last-name').val(),
+            address: $('#search-address').val(),
+            city: $('#search-city').val(),
+            state: $('#search-state').val(),
+            zip: $('#search-zip').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
+        $('#search-first-name').val('');
+        $('#search-last-name').val('');
+        $('#search-address').val('');
+        $('#search-city').val('');
+        $('#search-state').val('');
+        $('#search-zip').val('');
+        fillAddressTable(data, status);
+    });
+});
 // on click for our add button
 $('#add-button').click(function (event) {
 // we don’t want the button to actually submit

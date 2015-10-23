@@ -19,7 +19,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
         <style type="text/css">
             h1{
-                /*background-color:lightcoral;*/
+                background-color:lightcoral;
                 text-align: center;
                 border-radius: 25px;
                 padding-top: 10px;

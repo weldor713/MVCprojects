@@ -108,60 +108,60 @@ public class AddressBookDaoTest {
         assertEquals(cList.size(), 2);
     }
 
-    @Test
-    public void searchAddresss() {
-// create new address
-        Address nc = new Address();
-        nc.setFirstName("Jimmy");
-        nc.setLastName("Smith");
-        nc.setAddress("Sun");
-        nc.setCity("jimmy@smith.com");
-        nc.setState("jimmy@smith.com");
-        nc.setZip("1112223333");
-        dao.addAddress(nc);
-// create new address
-        Address nc2 = new Address();
-        nc2.setFirstName("John");
-        nc2.setLastName("Jones");
-        nc2.setAddress("Apple");
-        nc2.setCity("john@jones.com");
-        nc2.setState("john@jones.com");
-        nc2.setZip("5556667777");
-        dao.addAddress(nc2);
-// create new address - same last name as first address but different
-// company
-        Address nc3 = new Address();
-        nc3.setFirstName("Steve");
-        nc3.setLastName("Smith");
-        nc3.setAddress("Microsoft");
-        nc3.setCity("steve@msft.com");
-        nc3.setState("steve@msft.com");
-        nc3.setZip("5552221234");
-        dao.addAddress(nc3);
-// Create search criteria
-        Map<SearchTerm, String> criteria = new HashMap<>();
-        criteria.put(SearchTerm.LAST_NAME, "Jones");
-        List<Address> cList = dao.searchAddresss(criteria);
-        assertEquals(1, cList.size());
-        assertEquals(nc2, cList.get(0));
-// New search criteria - look for Smith
-        criteria.put(SearchTerm.LAST_NAME, "Smith");
-        cList = dao.searchAddresss(criteria);
-        assertEquals(2, cList.size());
-// Add company to search criteria
-        criteria.put(SearchTerm.ADDRESS, "Sun");
-        cList = dao.searchAddresss(criteria);
-        assertEquals(1, cList.size());
-        assertEquals(nc, cList.get(0));
-// Change company to Microsoft, should get back nc3
-        criteria.put(SearchTerm.ADDRESS, "Microsoft");
-        cList = dao.searchAddresss(criteria);
-        assertEquals(1, cList.size());
-        assertEquals(nc3, cList.get(0));
-// Change company to Apple, should get back nothing
-        criteria.put(SearchTerm.ADDRESS, "Apple");
-        cList = dao.searchAddresss(criteria);
-        assertEquals(0, cList.size());
+//    @Test
+//    public void searchAddresss() {
+//// create new address
+//        Address nc = new Address();
+//        nc.setFirstName("Jimmy");
+//        nc.setLastName("Smith");
+//        nc.setAddress("Sun");
+//        nc.setCity("jimmy@smith.com");
+//        nc.setState("jimmy@smith.com");
+//        nc.setZip("1112223333");
+//        dao.addAddress(nc);
+//// create new address
+//        Address nc2 = new Address();
+//        nc2.setFirstName("John");
+//        nc2.setLastName("Jones");
+//        nc2.setAddress("Apple");
+//        nc2.setCity("john@jones.com");
+//        nc2.setState("john@jones.com");
+//        nc2.setZip("5556667777");
+//        dao.addAddress(nc2);
+//// create new address - same last name as first address but different
+//// company
+//        Address nc3 = new Address();
+//        nc3.setFirstName("Steve");
+//        nc3.setLastName("Smith");
+//        nc3.setAddress("Microsoft");
+//        nc3.setCity("steve@msft.com");
+//        nc3.setState("steve@msft.com");
+//        nc3.setZip("5552221234");
+//        dao.addAddress(nc3);
+//// Create search criteria
+//        Map<SearchTerm, String> criteria = new HashMap<>();
+//        criteria.put(SearchTerm.LAST_NAME, "Jones");
+//        List<Address> cList = dao.searchAddresss(criteria);
+//        assertEquals(1, cList.size());
+//        assertEquals(nc2, cList.get(0));
+//// New search criteria - look for Smith
+//        criteria.put(SearchTerm.LAST_NAME, "Smith");
+//        cList = dao.searchAddresss(criteria);
+//        assertEquals(2, cList.size());
+//// Add company to search criteria
+//        criteria.put(SearchTerm.ADDRESS, "Sun");
+//        cList = dao.searchAddresss(criteria);
+//        assertEquals(1, cList.size());
+//        assertEquals(nc, cList.get(0));
+//// Change company to Microsoft, should get back nc3
+//        criteria.put(SearchTerm.ADDRESS, "Microsoft");
+//        cList = dao.searchAddresss(criteria);
+//        assertEquals(1, cList.size());
+//        assertEquals(nc3, cList.get(0));
+//// Change company to Apple, should get back nothing
+//        criteria.put(SearchTerm.ADDRESS, "Apple");
+//        cList = dao.searchAddresss(criteria);
+//        assertEquals(0, cList.size());
     }
-}
+
 

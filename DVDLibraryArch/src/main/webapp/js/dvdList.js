@@ -7,57 +7,64 @@ $(document).ready(function () {
 //==========
 // Load dvds into the summary table
 function loadDvds() {
+// Make an Ajax GET call to the 'dvds' endpoint. Iterate through
+// each of the JSON objects that are returned and render them to the
+// summary table
+    $.ajax({
+        url: "dvds"
+    }).success(function (data, status) {
+        fillDvdTable(data, status);
+    });
+}
+
+// Clear all content rows from the summary table
+function clearDvdTable() {
+    $('#contentRows').empty();
+    }
+    
+    
+function fillDvdTable(dvdList, status) {
 // clear the previous list
     clearDvdTable();
 // grab the tbody element that will hold the new list of dvds
     var cTable = $('#contentRows');
-// Make an Ajax GET call to the 'dvds' endpoint. Iterate through
-// each of the JSON objects that are returned and render them to the
-// summary table.
-    $.ajax({
-        url: "dvds"
-    }).success(function (data, status) {
-        $.each(data, function (index, dvd) {
-            cTable.append($('<tr>')
-                    .append($('<td>')
-                            .append($('<a>')
-                                    .attr({
-                                        'data-dvd-id': dvd.dvdId,
-                                        'data-toggle': 'modal',
-                                        'data-target': '#detailsModal'
-                                    })
-                                    .text(dvd.title + ' ' +
-                                            dvd.director)
-                                    ) // ends the <a> tag
-                            ) // ends the <td> tag for the dvd name
-                    .append($('<td>').text(dvd.releasedate))
-                    .append($('<td>')
-                            .append($('<a>')
-                                    .attr({
-                                        'data-dvd-id': dvd.dvdId,
-                                        'data-toggle': 'modal',
-                                        'data-target': '#editModal'
-                                    })
-                                    .text('Edit')
-                                    ) // ends the <a> tag
-                            ) // ends the <td> tag for Edit
-                    .append($('<td>')
-                            .append($('<a>')
-                                    .attr({
-                                        'onClick': 'deleteDvd(' +
-                                                dvd.dvdId + ')'
-                                    })
-                                    .text('Delete')
-                                    ) // ends the <a> tag
-                            ) // ends the <td> tag for Delete
-                    ); // ends the <tr> for this Dvd
-        }); // ends the 'each' function
-    });
+// render the new dvd data to the table
+    $.each(dvdList, function (index, dvd) {
+        cTable.append($('<tr>')
+                .append($('<td>')
+                        .append($('<a>')
+                                .attr({
+                                    'data-dvd-id': dvd.dvdId,
+                                    'data-toggle': 'modal',
+                                    'data-target': '#detailsModal'
+                                })
+                                .text(dvd.title)
+                                ) // ends the <a> tag
+                        ) // ends the <td> tag for the dvd name
+                .append($('<td>').text(dvd.director))
+                .append($('<td>')
+                        .append($('<a>')
+                                .attr({
+                                    'data-dvd-id': dvd.dvdId,
+                                    'data-toggle': 'modal',
+                                    'data-target': '#editModal'
+                                })
+                                .text('Edit')
+                                ) // ends the <a> tag
+                        ) // ends the <td> tag for Edit
+                .append($('<td>')
+                        .append($('<a>')
+                                .attr({
+                                    'onClick': 'deleteDvd(' +
+                                            dvd.dvdId + ')'
+                                })
+                                .text('Delete')
+                                ) // ends the <a> tag
+                        ) // ends the <td> tag for Delete
+                ); // ends the <tr> for this Dvd
+    }); // ends the 'each' function
 }
-// Clear all content rows from the summary table
-function clearDvdTable() {
-    $('#contentRows').empty();
-}
+
 
 // on click for our add button
     $('#add-button').click(function (event) {
@@ -92,6 +99,36 @@ function clearDvdTable() {
             //return false;
         });
     });
+    
+    // on click for our search button
+$('#search-button').click(function (event) {
+// we don’t want the button to actually submit
+// we'll handle data submission via ajax
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: 'search/dvds',
+        data: JSON.stringify({
+            title: $('#search-title').val(),
+            director: $('#search-director').val(),
+            releasedate: $('#search-releasedate').val(),
+            mpaarating: $('#search-mpaarating').val(),
+            studio: $('#search-studio').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
+        $('#search-title').val('');
+        $('#search-director').val('');
+        $('#search-releasedate').val('');
+        $('#search-mpaarating').val('');
+        $('#search-studio').val('');
+        fillDvdTable(data, status);
+    });
+});
 
 // This code runs in response to show.bs.modal event for the details Modal
 $('#detailsModal').on('show.bs.modal', function (event) {
