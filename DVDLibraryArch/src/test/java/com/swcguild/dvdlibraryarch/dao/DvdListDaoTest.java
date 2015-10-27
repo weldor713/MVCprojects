@@ -19,6 +19,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
@@ -40,10 +41,13 @@ public class DvdListDaoTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() {// Ask Spring for my DAO
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
-        dao = ctx.getBean("dvdBean", DvdListDao.class);
+        dao = (DvdListDao) ctx.getBean("dvdListDao");
+// Grab a JdbcTemplate to use for cleaning up
+        JdbcTemplate cleaner = (JdbcTemplate) ctx.getBean("jdbcTemplate");
+        cleaner.execute("delete from dvds");
     }
 
     @After
@@ -122,8 +126,8 @@ public class DvdListDaoTest {
         nc2.setMpaarating("john@jones.com");
         nc2.setStudio("5556667777");
         dao.addDvd(nc2);
-// create new dvd - same last name as first dvd but different
-// company
+// create new dvd - same director as first dvd but different
+// dvd
         Dvd nc3 = new Dvd();
         nc3.setTitle("Steve");
         nc3.setDirector("Smith");
@@ -141,17 +145,17 @@ public class DvdListDaoTest {
         criteria.put(SearchTerm.DIRECTOR, "Smith");
         cList = dao.searchDvds(criteria);
         assertEquals(2, cList.size());
-//// Add company to search criteria
+//// Add releasedate to search criteria
         criteria.put(SearchTerm.RELEASEDATE, "Sun");
         cList = dao.searchDvds(criteria);
         assertEquals(1, cList.size());
         assertEquals(nc, cList.get(0));
-// Change company to Microsoft, should get back nc3
+// Change releasedate to Microsoft, should get back nc3
         criteria.put(SearchTerm.RELEASEDATE, "Microsoft");
         cList = dao.searchDvds(criteria);
         assertEquals(1, cList.size());
         assertEquals(nc3, cList.get(0));
-// Change company to Apple, should get back nothing
+// Change releasedate to Apple, should get back nothing
         criteria.put(SearchTerm.RELEASEDATE, "Apple");
         cList = dao.searchDvds(criteria);
         assertEquals(0, cList.size());

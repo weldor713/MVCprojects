@@ -14,9 +14,8 @@ import java.util.Map;
  * @author apprentice
  */
 public interface AddressBookDao {
-    
-  // add the given Address to the data store
 
+  // add the given Address to the data store
     public Address addAddress(Address address);
 // remove the Address with the given id from the data store
 
@@ -31,14 +30,14 @@ public interface AddressBookDao {
 
     public Address getAddressById(int addressId);
 // search for Addresss by the given search criteria values
-    
+
     public List<Address> searchByCity(Map<SearchTerm, String> criteria);
-    
+
     public List<Address> searchByLastName(Map<SearchTerm, String> criteria);
-    
+
     public List<Address> searchByState(Map<SearchTerm, String> criteria);
-    
+
     public List<Address> searchByZip(Map<SearchTerm, String> criteria);
 
-//    public List<Address> searchAddresss(Map<SearchTerm, String> criteria);
+   // public List<Address> searchAddresss(Map<SearchTerm, String> criteria);
 }

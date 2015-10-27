@@ -5,7 +5,10 @@
  */
 package com.swcguild.contactlistmvc.dao;
 
-
+/**
+ *
+ * @author mgaffney
+ */
 public enum SearchTerm {
-FIRST_NAME, LAST_NAME, COMPANY, PHONE, EMAIL
+    FIRST_NAME, LAST_NAME, COMPANY, PHONE, EMAIL
 }

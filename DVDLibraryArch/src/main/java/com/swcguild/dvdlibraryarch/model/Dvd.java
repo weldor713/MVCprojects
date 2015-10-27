@@ -6,6 +6,8 @@
 package com.swcguild.dvdlibraryarch.model;
 
 import java.util.Objects;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -14,11 +16,27 @@ import java.util.Objects;
 public class Dvd {
 
     private int dvdId;
+    
+    @NotEmpty(message="You must supply a value for title.")
+    @Length(max=50, message="Title must be no more than 50 characters in length.")
     private String title;
+    
+    @NotEmpty(message="You must supply a value for director.")
+    @Length(max=50, message="Director must be no more than 50 characters in length.")
     private String director;
+    
+    @NotEmpty(message="You must supply a value for release date.")
     private String releasedate;
+    
+    @NotEmpty(message="You must supply a value for mpaa rating.")
+    @Length(max=5, message="Mpaa rating must be no more than 5 characters in length.")
     private String mpaarating;
+    
+    @NotEmpty(message="You must supply a value for studio.")
+    @Length(max=50, message="Studio must be no more than 50 characters in length.")
     private String studio;
+    
+    
 
 
     public int getDvdId() {

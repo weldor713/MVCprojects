@@ -1,14 +1,11 @@
 package com.swcguild.contactlistmvc.dao;
 
-//import com.swcguild.contactlistmvc.dao.ContactListDao;
-//import com.swcguild.contactlistmvc.dao.SearchTerm;
 import com.swcguild.contactlistmvc.model.Contact;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class ContactListDaoTest {
 
@@ -34,9 +32,12 @@ public class ContactListDaoTest {
 
     @Before
     public void setUp() {
-        ApplicationContext ctx
-                = new ClassPathXmlApplicationContext("test-applicationContext.xml");
-        dao = ctx.getBean("contactListDao", ContactListDao.class);
+        ApplicationContext ctx =
+    new ClassPathXmlApplicationContext("test-applicationContext.xml");
+    dao = (ContactListDao) ctx.getBean("contactListDao");
+    // Grab a JdbcTemplate to use for cleaning up
+    JdbcTemplate cleaner = (JdbcTemplate) ctx.getBean("jdbcTemplate");
+    cleaner.execute("delete from contacts");
     }
 
     @After
@@ -45,7 +46,7 @@ public class ContactListDaoTest {
 
     @Test
     public void addGetDeleteContact() {
-// create new contact
+        // create new contact
         Contact nc = new Contact();
         nc.setFirstName("John");
         nc.setLastName("Doe");
@@ -77,7 +78,7 @@ public class ContactListDaoTest {
 
     @Test
     public void getAllContacts() {
-// create new contact
+    // create new contact
         Contact nc = new Contact();
         nc.setFirstName("Jimmy");
         nc.setLastName("Smith");
@@ -85,7 +86,7 @@ public class ContactListDaoTest {
         nc.setEmail("jimmy@smith.com");
         nc.setPhone("1112223333");
         dao.addContact(nc);
-// create new contact
+    // create new contact
         Contact nc2 = new Contact();
         nc2.setFirstName("John");
         nc2.setLastName("Jones");
@@ -99,7 +100,7 @@ public class ContactListDaoTest {
 
     @Test
     public void searchContacts() {
-// create new contact
+    // create new contact
         Contact nc = new Contact();
         nc.setFirstName("Jimmy");
         nc.setLastName("Smith");
@@ -115,8 +116,7 @@ public class ContactListDaoTest {
         nc2.setEmail("john@jones.com");
         nc2.setPhone("5556667777");
         dao.addContact(nc2);
-// create new contact - same last name as first contact but different
-// company
+// create new contact - same last name as first contact but different // company
         Contact nc3 = new Contact();
         nc3.setFirstName("Steve");
         nc3.setLastName("Smith");

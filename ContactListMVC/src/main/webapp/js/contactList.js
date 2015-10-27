@@ -1,61 +1,121 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 // Document ready function
 $(document).ready(function () {
     loadContacts();
-});
-
-// NEW CODE START
-// on click for our add button
-$('#add-button').click(function (event) {
+    // on click for our add button
+    $('#add-button').click(function (event) {
 // we don’t want the button to actually submit
 // we'll handle data submission via ajax
-    event.preventDefault();
-// Make an Ajax call to the server. HTTP verb = POST, URL = contact
-    $.ajax({
-        type: 'POST',
-        url: 'contact',
-// Build a JSON object from the data in the form
-        data: JSON.stringify({
-            firstName: $('#add-first-name').val(),
-            lastName: $('#add-last-name').val(),
-            company: $('#add-company').val(),
-            phone: $('#add-phone').val(),
-            email: $('#add-email').val()
-        }),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        'dataType': 'json'
-    }).success(function (data, status) {
-// If the call succeeds, clear the form and reload the summary table
-
-        $('#add-first-name').val('');
-        $('#add-last-name').val('');
-        $('#add-company').val('');
-        $('#add-phone').val('');
-        $('#add-email').val('');
-        $('#validationErrors').empty();
-        loadContacts();
-    }).error(function (data, status) {
-        $('#validationErrors').empty();
-// Go through each of the fieldErrors and display the associated error
-// message in the validationErrors div
-        $.each(data.responseJSON.fieldErrors, function (index,
-                validationError) {
-//            var errorDiv = $('#validationErrors');
-            $('#validationErrors').append(validationError.message).append($('<br>'));
+        event.preventDefault();
+// Make an Ajax call to the server. HTTP verb = POST, URL = contact 
+        $.ajax({
+            type: 'POST',
+            url: 'contact',
+// Build a JSON object from the data in the form 
+            data: JSON.stringify({
+                firstName: $('#add-first-name').val(),
+                lastName: $('#add-last-name').val(),
+                company: $('#add-company').val(),
+                phone: $('#add-phone').val(),
+                email: $('#add-email').val()
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'dataType': 'json'
+        }).success(function (data, status) {
+// If the call succeeds, clear the form and reload the summary
+            $('#add-first-name').val('');
+            $('#add-last-name').val('');
+            $('#add-company').val('');
+            $('#add-phone').val('');
+            $('#add-email').val('');
+            $('#validationErrors').empty();
+            loadContacts();
+            //return false;
+        }).error(function (data, status) {
+            $('#validationErrors').empty();
+            $.each(data.responseJSON.fieldErrors, function (index, validationError) {
+                //var errorDiv = $('#validationErrors');
+                //errorDiv.append(validationError.message).append($('<br>'));
+                $('#validationErrors').append(validationError.message).append($('<br>'));
+            });
+        });
+    });
+    $('#edit-button').click(function (event) {
+// prevent the button press from submitting the whole page event.preventDefault();
+// Ajax call -
+// Method - PUT
+// URL - contact/{id}
+// Just reload all of the Contacts upon success
+        $.ajax({
+            type: 'PUT',
+            url: 'contact/' + $('#edit-contact-id').val(),
+            data: JSON.stringify({
+                contactId: $('#edit-contact-id').val(),
+                firstName: $('#edit-first-name').val(),
+                lastName: $('#edit-last-name').val(),
+                company: $('#edit-company').val(),
+                phone: $('#edit-phone').val(),
+                email: $('#edit-email').val()
+            }),
+            headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json'
+            },
+            'dataType': 'json'
+        }).success(function () {
+            loadContacts();
+            $('#editModal').modal('hide');
+        }).error(function (data, status) {
+            $('#validationErrorsEdit').empty();
+            $.each(data.responseJSON.fieldErrors, function (index, validationError) {
+                //var errorDiv = $('#validationErrors');
+                //errorDiv.append(validationError.message).append($('<br>'));
+                $('#validationErrorsEdit').append(validationError.message).append($('<br>'));
+            });
+        });
+    });
+    $('#search-button').click(function (event) {
+// we don’t want the button to actually submit 
+// we'll handle data submission via ajax 
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: 'search/contacts',
+            data: JSON.stringify({
+                firstName: $('#search-first-name').val(),
+                lastName: $('#search-last-name').val(),
+                company: $('#search-company').val(),
+                phone: $('#search-phone').val(),
+                email: $('#search-email').val()
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'dataType': 'json'
+        }).success(function (data, status) {
+            $('#search-first-name').val('');
+            $('#search-last-name').val('');
+            $('#search-company').val('');
+            $('#search-phone').val('');
+            $('#search-email').val('');
+            fillContactTable(data, status);
         });
     });
 });
-
 //==========
 // FUNCTIONS
 //==========
 // Load contacts into the summary table
 function loadContacts() {
-// Make an Ajax GET call to the 'contacts' endpoint. Iterate through
-// each of the JSON objects that are returned and render them to the
-// summary table
+
     $.ajax({
         url: "contacts"
     }).success(function (data, status) {
@@ -63,17 +123,9 @@ function loadContacts() {
     });
 }
 
-// Clear all content rows from the summary table
-function clearContactTable() {
-    $('#contentRows').empty();
-}
-
 function fillContactTable(contactList, status) {
-// clear the previous list
     clearContactTable();
-// grab the tbody element that will hold the new list of contacts
     var cTable = $('#contentRows');
-// render the new contact data to the table
     $.each(contactList, function (index, contact) {
         cTable.append($('<tr>')
                 .append($('<td>')
@@ -83,8 +135,7 @@ function fillContactTable(contactList, status) {
                                     'data-toggle': 'modal',
                                     'data-target': '#detailsModal'
                                 })
-                                .text(contact.firstName + ' ' +
-                                        contact.lastName)
+                                .text(contact.firstName + ' ' + contact.lastName)
                                 ) // ends the <a> tag
                         ) // ends the <td> tag for the contact name
                 .append($('<td>').text(contact.company))
@@ -98,70 +149,35 @@ function fillContactTable(contactList, status) {
                                 .text('Edit')
                                 ) // ends the <a> tag
                         ) // ends the <td> tag for Edit
-                .append($('<td>')
-                        .append($('<a>')
-                                .attr({
-                                    'onClick': 'deleteContact(' +
-                                            contact.contactId + ')'
-                                })
-                                .text('Delete')
-                                ) // ends the <a> tag
-                        ) // ends the <td> tag for Delete
-                ); // ends the <tr> for this Contact
-    }); // ends the 'each' function
-}
+                .append($('<td>').append($('<a>')
+                        .attr({
+                            'onClick': 'deleteContact(' +
+                                    contact.contactId + ')'
+                        })
 
-function deleteContact(id) {
-    var answer = confirm("Do you really want to delete this contact?");
-    if (answer === true) {
-        $.ajax({
-            type: 'DELETE',
-            url: 'contact/' + id
-        }).success(function () {
-            loadContacts();
-        });
-    }
-}
-
-// on click for our search button
-$('#search-button').click(function (event) {
-// we don’t want the button to actually submit
-// we'll handle data submission via ajax
-    event.preventDefault();
-    $.ajax({
-        type: 'POST',
-        url: 'search/contacts',
-        data: JSON.stringify({
-            firstName: $('#search-first-name').val(),
-            lastName: $('#search-last-name').val(),
-            company: $('#search-company').val(),
-            phone: $('#search-phone').val(),
-            email: $('#search-email').val()
-        }),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        'dataType': 'json'
-    }).success(function (data, status) {
-        $('#search-first-name').val('');
-        $('#search-last-name').val('');
-        $('#search-company').val('');
-        $('#search-phone').val('');
-        $('#search-email').val('');
-        fillContactTable(data, status);
+                        .text('Delete')
+                        )
+                        )
+                );
     });
-});
+}
 
-// This code runs in response to show.bs.modal event for the details Modal
+
+
+// Clear all content rows from the summary table
+function clearContactTable() {
+    $('#contentRows').empty();
+}
+
 $('#detailsModal').on('show.bs.modal', function (event) {
-// get the element that triggered the event
+// Get the element that triggered this event - in our case it is a contact // name link in the summary table. This link has an attribute that contains // the contactId for the given contact. We'll use that to retrieve the
+// contact's details.
     var element = $(event.relatedTarget);
+// grab the contact id
     var contactId = element.data('contact-id');
+    // PLACEHOLDER:  Eventually we'll make an ajax call to the server to get the
+    //               details for this contact but for now we'll load the dummy data
     var modal = $(this);
-// make an ajax call to get contact information for given contact id
-// this is a GET request to contact/{id}
-// upon success, put the returned JSON data into the modal dialog
     $.ajax({
         type: 'GET',
         url: 'contact/' + contactId
@@ -174,13 +190,15 @@ $('#detailsModal').on('show.bs.modal', function (event) {
         modal.find('#contact-email').text(contact.email);
     });
 });
-
-
-
-// This code runs in response to the show.hs.modal event for the edit Modal
 $('#editModal').on('show.bs.modal', function (event) {
+// Get the element that triggered this event - in our case it is a contact // name link in the summary table. This link has an attribute that contains // the contactId for the given contact. We'll use that to retrieve the
+// contact's details.
     var element = $(event.relatedTarget);
+// Grab the contact id
     var contactId = element.data('contact-id');
+// PLACEHOLDER: Eventually we'll make an ajax call to the server to get the
+    //               details for this contact but for now we'll load the dummy
+// data
     var modal = $(this);
     $.ajax({
         type: 'GET',
@@ -191,38 +209,17 @@ $('#editModal').on('show.bs.modal', function (event) {
         modal.find('#edit-first-name').val(contact.firstName);
         modal.find('#edit-last-name').val(contact.lastName);
         modal.find('#edit-company').val(contact.company);
-        modal.find('#edit-email').val(contact.email);
         modal.find('#edit-phone').val(contact.phone);
+        modal.find('#edit-email').val(contact.email);
     });
 });
-
-// onclick handler for edit button
-$('#edit-button').click(function (event) {
-// prevent the button press from submitting the whole page
-    event.preventDefault();
-// Ajax call -
-// Method - PUT
-// URL - contact/{id}
-// Just reload all of the Contacts upon success
-    $.ajax({
-        type: 'PUT',
-        url: 'contact/' + $('#edit-contact-id').val(),
-        data: JSON.stringify({
-            contactId: $('#edit-contact-id').val(),
-            firstName: $('#edit-first-name').val(),
-            lastName: $('#edit-last-name').val(),
-            company: $('#edit-company').val(),
-            phone: $('#edit-phone').val(),
-            email: $('#edit-email').val()
-        }),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        'dataType': 'json'
-    }).success(function () {
-        loadContacts();
-    });
-});
-
-
+function deleteContact(id) {
+    var answer = confirm("Do you really want to delete this contact?");
+    if (answer === true) {
+        $.ajax({
+            type: 'DELETE',
+            url: 'contact/' + id}).success(function () {
+            loadContacts();
+        });
+    }
+}

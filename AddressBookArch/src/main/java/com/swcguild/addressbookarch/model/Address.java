@@ -6,6 +6,8 @@
 package com.swcguild.addressbookarch.model;
 
 import java.util.Objects;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -13,11 +15,29 @@ import java.util.Objects;
  */
 public class Address {
         public int addressId;
+        
+    @NotEmpty(message="You must supply a value for first name.")
+    @Length(max=50, message="First Name must be no more than 50 characters in length.")    
     public String firstName;
+    
+    @NotEmpty(message="You must supply a value for last name.")
+    @Length(max=50, message="Last Name must be no more than 50 characters in length.")
     public String lastName;
+    
+    @NotEmpty(message="You must supply a value for address.")
+    @Length(max=50, message="Address must be no more than 50 characters in length.")
     public String address;
+    
+    @NotEmpty(message="You must supply a value for city.")
+    @Length(max=50, message="City must be no more than 50 characters in length.")
     public String city;
+    
+    @NotEmpty(message="You must supply a value for state.")
+    @Length(max=2, message="State must be no more than 2 characters in length.")
     public String state;
+    
+    @NotEmpty(message="You must supply a value for zip.")
+    @Length(max=5, message="Zip must be no more than 5 characters in length.")
     public String zip;
 
     /**

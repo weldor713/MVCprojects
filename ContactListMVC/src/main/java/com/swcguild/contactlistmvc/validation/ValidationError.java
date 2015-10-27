@@ -7,7 +7,7 @@ package com.swcguild.contactlistmvc.validation;
 
 /**
  *
- * @author apprentice
+ * @author mgaffney
  */
 public class ValidationError {
 
@@ -27,6 +27,3 @@ public class ValidationError {
         return message;
     }
 }
-
-    
-

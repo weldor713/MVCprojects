@@ -119,7 +119,7 @@
                                 Zip:
                             </label>
                             <div class="col-md-8">
-                                <input type="text"
+                                <input type="number"
                                        class="form-control"
                                        id ="add-zip"
                                        placeholder ="Zip"/>
@@ -136,6 +136,9 @@
 
                         </div>
                     </form>
+                     <div id="validationErrors" style="color: red"/>
+                     <div id="success" style="color: greenyellow"/>
+                     
                 </div> 
 
             </div>

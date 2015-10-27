@@ -5,28 +5,28 @@
  */
 package com.swcguild.contactlistmvc.controller;
 
-import com.swcguild.contactlistmvc.dao.ContactListDao;
-import com.swcguild.contactlistmvc.dao.SearchTerm;
-import com.swcguild.contactlistmvc.model.Contact;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
+import com.swcguild.contactlistmvc.dao.ContactListDao;
+import com.swcguild.contactlistmvc.model.Contact;
+import com.swcguild.contactlistmvc.dao.SearchTerm;
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
- * @author AGallagher
+ * @author mgaffney
  */
 @Controller
 public class SearchController {
-
     private ContactListDao dao;
-
+    
     @Inject
     public SearchController(ContactListDao dao) {
         this.dao = dao;
@@ -42,9 +42,7 @@ public class SearchController {
     public List<Contact> searchContacts(@RequestBody Map<String, String> searchMap) {
 // Create the map of search criteria to send to the DAO
         Map<SearchTerm, String> criteriaMap = new HashMap<>();
-// Determine which search terms have values, translate the String
-// keys into SearchTerm enums, and set the corresponding values
-// appropriately.
+// Determine which search terms have values, translate the String // keys into SearchTerm enums, and set the corresponding values // appropriately.
         String currentTerm = searchMap.get("firstName");
         if (!currentTerm.isEmpty()) {
             criteriaMap.put(SearchTerm.FIRST_NAME, currentTerm);

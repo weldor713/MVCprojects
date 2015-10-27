@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.swcguild.contactlistmvc.model;
 
 import java.util.Objects;
@@ -9,20 +14,20 @@ public class Contact {
 
     private int contactId;
     
-    @NotEmpty(message="You must supply avalue for first name.")
+    @NotEmpty(message="You must supply a value for first name.")
     @Length(max=50, message="First Name must be no more than 50 characters in length.")
     private String firstName;
     
-    @NotEmpty(message="You must supply a value for Last Name.")
+    @NotEmpty(message="You must supply a value for last name.")
     @Length(max=50, message="Last Name must be no more than 50 characters in length.")
     private String lastName;
-
-    @NotEmpty(message="You must supply a value for Company.")
-    @Length(max=50, message="Company must be no more than 50 characters inlength.")
+    
+    @NotEmpty(message="You must supply a value for company.")
+    @Length(max=50, message="Company must be no more than 50 characters in length.")
     private String company;
     
-    @NotEmpty(message="You must supply a value for Phone.")
-    @Length(max=10, message="Phone must be no more than 10 characters inlength.")
+    @NotEmpty(message="You must supply a value for phone number.")
+    @Length(max=10, message="Phone number must be no more than 10 characters in length.")
     private String phone;
     
     @Email(message="Please enter a valid email address.")
@@ -119,3 +124,6 @@ public class Contact {
         return true;
     }
 }
+
+
+

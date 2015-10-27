@@ -20,9 +20,9 @@ function loadDvds() {
 // Clear all content rows from the summary table
 function clearDvdTable() {
     $('#contentRows').empty();
-    }
-    
-    
+}
+
+
 function fillDvdTable(dvdList, status) {
 // clear the previous list
     clearDvdTable();
@@ -67,40 +67,46 @@ function fillDvdTable(dvdList, status) {
 
 
 // on click for our add button
-    $('#add-button').click(function (event) {
+$('#add-button').click(function (event) {
 // we don’t want the button to actually submit
 // we'll handle data submission via ajax
-        event.preventDefault();
+    event.preventDefault();
 // Make an Ajax call to the server. HTTP verb = POST, URL = dvd 
-        $.ajax({
-            type: 'POST',
-            url: 'dvd',
+    $.ajax({
+        type: 'POST',
+        url: 'dvd',
 // Build a JSON object from the data in the form 
-            data: JSON.stringify({
-                title: $('#add-title').val(),
-                director: $('#add-director').val(),
-                releasedate: $('#add-releasedate').val(),
-                mpaarating: $('#add-mpaarating').val(),
-                studio: $('#add-studio').val()
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            'dataType': 'json'
-        }).success(function (data, status) {
+        data: JSON.stringify({
+            title: $('#add-title').val(),
+            director: $('#add-director').val(),
+            releasedate: $('#add-releasedate').val(),
+            mpaarating: $('#add-mpaarating').val(),
+            studio: $('#add-studio').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json'
+    }).success(function (data, status) {
 // If the call succeeds, clear the form and reload the summary
-            $('#add-title').val('');
-            $('#add-director').val('');
-            $('#add-releasedate').val('');
-            $('#add-mpaarating').val('');
-            $('#add-studio').val('');
-            loadDvds();
-            //return false;
+        $('#add-title').val('');
+        $('#add-director').val('');
+        $('#add-releasedate').val('');
+        $('#add-mpaarating').val('');
+        $('#add-studio').val('');
+        $('#validationErrors').empty();
+        loadDvds();
+        //return false;
+    }).error(function (data, status) {
+        $('#validationErrors').empty();
+        $.each(data.responseJSON.fieldErrors, function (index, validationError) {
+            $('#validationErrors').append(validationError.message).append($('<br>'));
         });
     });
-    
-    // on click for our search button
+});
+
+// on click for our search button
 $('#search-button').click(function (event) {
 // we don’t want the button to actually submit
 // we'll handle data submission via ajax

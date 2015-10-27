@@ -16,7 +16,16 @@
         <link href ="${pageContext.request.contextPath}/css/bootstrap.min.css"
               rel = "stylesheet">
         <link rel="shortcut icon" href ="${pageContext.request.contextPath}/img/icon.png">
-
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $("#add-releasedate").datepicker();
+            });
+        </script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="resources/demos/style.css">
+        
     </head>
     <body>
         <div class="container">
@@ -117,6 +126,7 @@
                             </div>
                         </div>
                     </form>
+                      <div id="validationErrors" style="color: red"/>
                 </div> <!-- end right column -->
             </div> <!-- End Row div -->
 
@@ -226,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+<!--      //  <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>-->
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/dvdList.js"></script>
     </body>

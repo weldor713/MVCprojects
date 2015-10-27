@@ -33,7 +33,7 @@ function fillAddressTable(addressList, status) {
                                     'data-toggle': 'modal',
                                     'data-target': '#detailsModal'
                                 })
-                                .text(address.firstName + ' ' +address.lastName)
+                                .text(address.firstName + ' ' + address.lastName)
                                 ) // ends the <a> tag
                         ) // ends the <td> tag for the address name
                 .append($('<td>').text(address.address))
@@ -65,7 +65,7 @@ function clearAddressTable() {
     $('#contentRows').empty();
 }
 
-    // on click for our search button
+// on click for our search button
 $('#search-button-city').click(function (event) {
 // we don’t want the button to actually submit
 // we'll handle data submission via ajax
@@ -221,11 +221,19 @@ $('#add-button').click(function (event) {
         $('#add-city').val('');
         $('#add-state').val('');
         $('#add-zip').val('');
+        $('#validationErrors').empty();
+        $('#success').append("Success!");
         loadAddresss();
 //return false;
+    }).error(function (data, status) {
+        $('#validationErrors').empty();
+        $.each(data.responseJSON.fieldErrors, function (index, validationError) {
+            //var errorDiv = $('#validationErrors');
+            //errorDiv.append(validationError.message).append($('<br>'));
+            $('#validationErrors').append(validationError.message).append($('<br>'));
+        });
     });
 });
-
 // This code runs in response to show.bs.modal event for the details Modal
 $('#detailsModal').on('show.bs.modal', function (event) {
 // get the element that triggered the event
@@ -248,9 +256,6 @@ $('#detailsModal').on('show.bs.modal', function (event) {
         modal.find('#address-zip').text(address.zip);
     });
 });
-
-
-
 // This code runs in response to the show.hs.modal event for the edit Modal
 $('#editModal').on('show.bs.modal', function (event) {
     var element = $(event.relatedTarget);
@@ -270,7 +275,6 @@ $('#editModal').on('show.bs.modal', function (event) {
         modal.find('#edit-zip').val(address.zip);
     });
 });
-
 // onclick handler for edit button
 $('#edit-button').click(function (event) {
 // prevent the button press from submitting the whole page
@@ -300,7 +304,6 @@ $('#edit-button').click(function (event) {
         loadAddresss();
     });
 });
-
 function deleteAddress(id) {
     var answer = confirm("Do you really want to delete this address?");
     if (answer === true) {
@@ -312,3 +315,4 @@ function deleteAddress(id) {
         });
     }
 }
+
