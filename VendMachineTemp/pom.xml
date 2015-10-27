@@ -5,7 +5,7 @@
   <artifactId>VendMachineTemp</artifactId>
   <version>1.0</version>
   <packaging>war</packaging>
-  <name>VendMachineTemp Spring MVC Webapp</name>
+  <name>VendMachine Spring MVC Webapp</name>
   <url>http://maven.apache.org</url>
   
           <properties>

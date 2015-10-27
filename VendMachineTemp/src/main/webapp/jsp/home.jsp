@@ -70,7 +70,7 @@
                 <div class="radio disabled">
                     <label><input type="radio" name="item" value="raisins" id="raisins" >Raisins $0.75</label>
                 </div>
-                <input type="submit">
+                <input id="foodchoice" type="submit">
             </form>
         </div>
         <br>
