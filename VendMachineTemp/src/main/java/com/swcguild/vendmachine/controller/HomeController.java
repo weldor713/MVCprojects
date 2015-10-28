@@ -5,7 +5,8 @@
  */
 package com.swcguild.vendmachine.controller;
 
-import java.util.List;
+import com.swcguild.vendmachine.dao.VendDao;
+import com.swcguild.vendmachine.model.Item;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -22,6 +22,10 @@ public interface VendDao {
     public void vendItem(int dvdId);
 // update the given Dvd in the data store
     
+    public void removeItem(int ItemId);
+    
+    public Item getItemById(int ItemId);
+    
     public void addToBank (BigDecimal bd);
     
     public String makeChange (BigDecimal ch);

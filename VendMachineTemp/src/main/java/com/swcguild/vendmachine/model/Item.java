@@ -2,14 +2,20 @@
 package com.swcguild.vendmachine.model;
 
 public class Item {
-    private int id;
-    
+    private int itemId;
     private String name;
     private double cost;
     
-    public Item( String name, double cost){
+    public Item(int itemId, String name, double cost){
+        this.itemId = itemId;
         this.name = name;
         this.cost = cost;
+    }
+    
+    public Item() {
+        this.itemId=0;
+        this.name="";
+        this.cost=0.0;
     }
 
     public void setName(String name) {
@@ -28,12 +34,12 @@ public class Item {
         return cost;
     }
 
-    public int getId() {
-        return id;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
 
