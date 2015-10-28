@@ -17,6 +17,16 @@
 
               <!-- SWC Icon -->
               <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
+              <script>
+    var money = 0;
+                  
+    $('#add-button').click(function() {
+//        var adder = $('#user-money').contents;
+//        money = money + adder;
+        $('#show-bank').innerHTML("Your current money");
+        
+    });
+              </script>
     </head>
     <body>
 
@@ -54,7 +64,7 @@
                         Enter Money
                     </button>
                 </div>
-
+                <div id="show-bank">showbank</div>
             </div>
         </form>
 
@@ -95,7 +105,7 @@
 
 
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.request.contextPath}/js/jquery-1.11.0.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
     </body>
