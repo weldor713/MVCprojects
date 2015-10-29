@@ -15,98 +15,122 @@
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
-              <!-- SWC Icon -->
-              <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
-              <script>
-    var money = 0;
-                  
-    $('#add-button').click(function() {
-//        var adder = $('#user-money').contents;
-//        money = money + adder;
-        $('#show-bank').innerHTML("Your current money");
-        
-    });
-              </script>
+        <!-- SWC Icon -->
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
+        <style>
+            #show-bank {
+                color: blue;
+                font-size: 20px;
+            }
+            #changerow {
+                color: blue;
+                font-size: 20px;
+            }
+        </style>
     </head>
     <body>
 
         <div class="container">
-            <h1>Vending Machine/Spring MVC Application from Archetype</h1>
-            <hr/>
+            <h2>Vending Machine</h2>
+            <br>
             <div class="navbar">
                 <ul class="nav nav-tabs">
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                     <li role ="presentation"> <a href="${pageContext.request.contextPath}/inventorymanager">Inventory Manager</a>
+                    <li role ="presentation"> <a href="${pageContext.request.contextPath}/inventorymanager">Inventory Manager</a>
                     </li>
                 </ul>    
             </div>
-        </div>
-        <h2>Vending Machine</h2>
-        <br>
+            <div class="row">
+                <div class ="text-center">
 
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="user-money" class="col-md-2 control-label">
-                    Enter Your $ Amount:
-                </label>
-                <div class="col-md-2">
-                    <input type="text"
-                           class="form-control"
-                           id="user-money"
-                           placeholder="$"/>
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class ="btn-group-lg">
+                            <button type="button"
+                                    id ="add-one"
+                                    class="btn btn-default">
+                                Add $1
+                            </button>
+                            <button type="button"
+                                    id ="add-five"
+                                    class="btn btn-default">
+                                Add $5
+                            </button>
+                            <button type="button"
+                                    id ="add-ten"
+                                    class="btn btn-default">
+                                Add $10
+                            </button>
+                        </div>
+                        <br>
+                        <div class = "text-center" id="show-bank">Total Money: $ 0.00</div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <button type="submit"
-                            id ="add-button"
-                            class="btn btn-default">
-                        Enter Money
-                    </button>
-                </div>
-                <div id="show-bank">showbank</div>
+            <div class ="row col-md-offset-3">
+                <form role="form">
+                    <div class="radio">
+                        <label><input type="radio" name="item" value="twix" id="twix">Twix $ 1.00</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="item" value="snickers" id="snickers">Snickers $1.50</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="item" value="raisins" id="raisins" >Raisins $0.75</label>
+                    </div>
+                    <input id="foodchoice" type="submit" value="Purchase items!">
+                </form>
             </div>
-        </form>
-
-
-        <div class="container">
-            <form role="form">
-                <div class="radio">
-                    <label><input type="radio" name="item" value="twix" id="twix">Twix $ 1.00</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="item" value="snickers" id="snickers">Snickers $1.50</label>
-                </div>
-                <div class="radio disabled">
-                    <label><input type="radio" name="item" value="raisins" id="raisins" >Raisins $0.75</label>
-                </div>
-                <input id="foodchoice" type="submit">
-            </form>
         </div>
         <br>
         <br>
-
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="change" class="col-md-2 control-label">
-                    Your Change:
-                </label>
-                <div class="col-md-2">
-                    <input type="text"
-                           class="form-control"
-                           id="change"
-                           placeholder="$"/>
-                </div>
+        <div class ="row col-md-offset-2" id="changerow">
+            <p class="col-md-2"></p>
+            <div id="change">
             </div>
-            <div class="form-group">
+        </div>
 
-            </div>
-        </form>
 
 
         <!-- Placed at the end of the document so the pages load faster -->
+
         <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script>
+            var money = 0;
+            $('#add-one').click(function () {
+                var adder = 1;
+                money = parseFloat(money) + parseFloat(adder);
+                var moneyTwoDec = parseFloat(money).toFixed(2);
+                var total = "Total Money: $ " + moneyTwoDec;
+                document.getElementById("show-bank").innerHTML = total;
+            });
+            $('#add-five').click(function () {
+                var adder = 5;
+                money = parseFloat(money) + parseFloat(adder);
+                var moneyTwoDec = parseFloat(money).toFixed(2);
+                var total = "Total Money: $ " + moneyTwoDec;
+                document.getElementById("show-bank").innerHTML = total;
+            });
+            $('#add-ten').click(function () {
+                var adder = 10;
+                money = parseFloat(money) + parseFloat(adder);
+                var moneyTwoDec = parseFloat(money).toFixed(2);
+                var total = "Total Money: $ " + moneyTwoDec;
+                document.getElementById("show-bank").innerHTML = total;
+            });
+            $('#foodchoice').click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var moneyTwoDec = parseFloat(money).toFixed(2);
+                var total = "Total Change: $ " + moneyTwoDec;
+                document.getElementById("change").innerHTML = total;
+                money = 0;
+                moneyTwoDec = parseFloat(money).toFixed(2);
+                total = "Total Money: $ " + moneyTwoDec;
+                document.getElementById("show-bank").innerHTML = total;
+                return false;
+            })
+        </script>
 
     </body>
 </html>
