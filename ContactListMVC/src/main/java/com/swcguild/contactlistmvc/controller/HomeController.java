@@ -64,7 +64,7 @@ public class HomeController {
 
     @RequestMapping(value = "/contact/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putContact(@PathVariable("id") int id, @Valid  @RequestBody Contact contact) {
+    public void putContact(@PathVariable("id") int id, @Valid @RequestBody Contact contact) {
 // set the value of the PathVariable id on the incoming Contact object
 // to ensure that a) the contact id is set on the object and b) that
 // the value of the PathVariable id and the Contact object id are the // same.
@@ -76,7 +76,17 @@ public class HomeController {
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
     @ResponseBody
     public List<Contact> getAllContacts() {
-              // get all of the Contacts from the data layer
+        // get all of the Contacts from the data layer
         return dao.getAllContacts();
+    }
+
+    // This method will be invoked by Spring MVC when it sees a request for
+// ContactListMVC/mainAjaxPage.
+    @RequestMapping(value = {"/mainAjaxPage"}, method = RequestMethod.GET)
+    public String displayMainAjaxPage() {
+// This method does nothing except return the logical name of the
+// view component (/jsp/home.jsp) that should be invoked in response
+// to this request.
+        return "mainAjaxPage";
     }
 }

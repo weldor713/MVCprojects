@@ -6,6 +6,7 @@
 package com.swcguild.vendingmvc.dao;
 
 import com.swcguild.vendingmvc.model.Item;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,8 @@ public interface VendDao {
     public void removeItem(int itemId);
     
     public Item getItemById(int id);
+    
+    public List<Item> getAllItems();
 
 
     

@@ -66,19 +66,16 @@
                     </div>
                 </div>
             </div>
-            <div class ="row col-md-offset-3">
-                <form role="form">
-                    <div class="radio">
-                        <label><input type="radio" name="item" value="twix" id="twix">Twix $ 1.00</label>
-                    </div>
-                    <div class="radio">
-                        <label><input type="radio" name="item" value="snickers" id="snickers">Snickers $1.50</label>
-                    </div>
-                    <div class="radio">
-                        <label><input type="radio" name="item" value="raisins" id="raisins" >Raisins $0.75</label>
-                    </div>
-                    <input id="foodchoice" type="submit" value="Purchase items!">
-                </form>
+                    <br><hr>
+            <div class ="row">
+                <div>                
+                    <table align="center">
+                        <tbody id="itemdisplay">
+                            
+                            <!--Items are built here-->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <br>
@@ -131,6 +128,5 @@
                 return false;
             })
         </script>
-
     </body>
 </html>

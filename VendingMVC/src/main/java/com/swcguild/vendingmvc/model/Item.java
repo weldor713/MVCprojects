@@ -10,17 +10,24 @@ package com.swcguild.vendingmvc.model;
  * @author apprentice
  */
 public class Item {
-        public int itemId;
-    
+    public int itemId;
     public String name;
     public double cost;
+    private int qty;
     
-    public Item(int itemId, String name, double cost){
+    public Item(int itemId, String name, double cost,int qty){
         this.itemId = itemId;
         this.name = name;
         this.cost = cost;
+        this.qty = qty;
 }
 
+    public Item(){
+        this.itemId = 0;
+        this.name = "";
+        this.cost = 0.0;
+        this.qty = 0;
+    }
     /**
      * @return the itemId
      */
@@ -61,6 +68,20 @@ public class Item {
      */
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    /**
+     * @return the qty
+     */
+    public int getQty() {
+        return qty;
+    }
+
+    /**
+     * @param qty the qty to set
+     */
+    public void setQty(int qty) {
+        this.qty = qty;
     }
     
     
