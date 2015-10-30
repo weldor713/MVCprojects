@@ -15,12 +15,12 @@ import java.util.List;
 public interface VendDao {
 
     public Item addItem(Item item);
-
-    public void removeItem(int itemId);
     
     public Item getItemById(int id);
     
     public List<Item> getAllItems();
+    
+    public void updateItem(Item item);
 
 
     

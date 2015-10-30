@@ -69,12 +69,12 @@
                     </div>
                 </div>
             </div>
-                    <br><hr>
+            <br><hr>
             <div class ="row">
                 <div>                
                     <table align="center">
                         <tbody id="itemdisplay">
-                            
+
                             <!--Items are built here-->
                         </tbody>
                     </table>

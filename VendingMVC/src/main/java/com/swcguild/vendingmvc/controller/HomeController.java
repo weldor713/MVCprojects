@@ -38,10 +38,22 @@ public class HomeController {
         return "home";
     }
 
+    @RequestMapping(value = "/check/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Item checkItem(@PathVariable("id") int id) {
+// retrieve the Item associated with the given id and return it
+        Item vItem = dao.getItemById(id);
+        return vItem;
+    }
+    
     @RequestMapping(value = "/vend/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Item getItem(@PathVariable("id") int id) {
-// retrieve the Item associated with the given id and return it
+    public Item vendItem(@PathVariable("id") int id) {
+        Item vItem = dao.getItemById(id);
+        int qty = vItem.getQty();
+        qty = qty-1;
+        vItem.setQty(qty);
+        dao.updateItem(vItem);
         return dao.getItemById(id);
     }
 
@@ -55,12 +67,12 @@ public class HomeController {
         return item;
     }
 
-    @RequestMapping(value = "/vend/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void vendItem(@PathVariable("id") int id) {
-// remove the Item associated with the given id from the data layer
-        dao.removeItem(id);
-    }
+//    @RequestMapping(value = "/vend/{id}", method = RequestMethod.DELETE)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void vendItem(@PathVariable("id") int id) {
+//// remove the Item associated with the given id from the data layer
+//        dao.updateItem(id);
+//    }
 
 //    @RequestMapping(value = "/vend/{id}", method = RequestMethod.PUT)
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
