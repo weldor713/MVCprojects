@@ -20,13 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class VendDaoDbImpl implements VendDao {
         private static final String SQL_INSERT_ITEM = 
-            "insert into vendmachine (name, cost, qty) values (?, ?, ?)";
+            "insert into item (name, cost, qty) values (?, ?, ?)";
     
     private static final String SQL_DELETE_ITEM = 
-            "delete from vendmachine where item_id = ?";
+            "delete from item where item_id = ?";
     
         private static final String SQL_SELECT_ALL_ITEMS = 
-            "select * from items";
+            "select * from item";
 
 
     private JdbcTemplate jdbcTemplate;

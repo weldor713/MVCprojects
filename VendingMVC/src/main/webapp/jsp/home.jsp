@@ -18,6 +18,9 @@
         <!-- SWC Icon -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
         <style>
+            #padded {
+                margin:20px;
+            }
             #show-bank {
                 color: blue;
                 font-size: 20px;
@@ -92,41 +95,6 @@
 
         <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-        <script>
-            var money = 0;
-            $('#add-one').click(function () {
-                var adder = 1;
-                money = parseFloat(money) + parseFloat(adder);
-                var moneyTwoDec = parseFloat(money).toFixed(2);
-                var total = "Total Money: $ " + moneyTwoDec;
-                document.getElementById("show-bank").innerHTML = total;
-            });
-            $('#add-five').click(function () {
-                var adder = 5;
-                money = parseFloat(money) + parseFloat(adder);
-                var moneyTwoDec = parseFloat(money).toFixed(2);
-                var total = "Total Money: $ " + moneyTwoDec;
-                document.getElementById("show-bank").innerHTML = total;
-            });
-            $('#add-ten').click(function () {
-                var adder = 10;
-                money = parseFloat(money) + parseFloat(adder);
-                var moneyTwoDec = parseFloat(money).toFixed(2);
-                var total = "Total Money: $ " + moneyTwoDec;
-                document.getElementById("show-bank").innerHTML = total;
-            });
-            $('#foodchoice').click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var moneyTwoDec = parseFloat(money).toFixed(2);
-                var total = "Total Change: $ " + moneyTwoDec;
-                document.getElementById("change").innerHTML = total;
-                money = 0;
-                moneyTwoDec = parseFloat(money).toFixed(2);
-                total = "Total Money: $ " + moneyTwoDec;
-                document.getElementById("show-bank").innerHTML = total;
-                return false;
-            })
-        </script>
+        <script src="${pageContext.request.contextPath}/js/vending.js"></script>
     </body>
 </html>
