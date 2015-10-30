@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Company Contacts</title>
+        <title>Dvd Library</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
         <!-- SWC Icon -->
@@ -30,11 +30,6 @@
                     <li role="presentation">
                         <a href="${pageContext.request.contextPath}/stats">Stats</a>
                     </li>
-                    <!--                    <li role="presentation">
-                                            <a href="${pageContext.request.contextPath}/">
-                                                Contact List (No Ajax)
-                                            </a>
-                                        </li>-->
                     <li role="presentation">
                         <a href="${pageContext.request.contextPath}/j_spring_security_logout">Log
                             Out</a>

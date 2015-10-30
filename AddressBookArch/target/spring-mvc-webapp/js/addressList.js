@@ -194,7 +194,7 @@ $('#add-button').click(function (event) {
 // we don’t want the button to actually submit
 // we'll handle data submission via ajax
     event.preventDefault();
-// Make an Ajax call to the server. HTTP verb = POST, URL = contact
+// Make an Ajax call to the server. HTTP verb = POST, URL = address
     $.ajax({
         type: 'POST',
         url: 'address',
