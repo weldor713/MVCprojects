@@ -81,4 +81,14 @@ public class HomeController {
         return dao.getAllDvds();
     }
 
+    // This method will be invoked by Spring MVC when it sees a request for
+// ContactListMVC/mainAjaxPage.
+    @RequestMapping(value = {"/mainAjaxPage"}, method = RequestMethod.GET)
+    public String displayMainAjaxPage() {
+// This method does nothing except return the logical name of the
+// view component (/jsp/home.jsp) that should be invoked in response
+// to this request.
+        return "mainAjaxPage";
+    }
+
 }
