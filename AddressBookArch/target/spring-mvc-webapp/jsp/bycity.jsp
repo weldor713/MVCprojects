@@ -9,6 +9,7 @@
 <%@taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@taglib prefix = "s" uri="http://www.springframework.org/tags"  %>
 <%@taglib prefix = "fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix = "sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -110,11 +111,11 @@
                                 <span aria-hidden="true">&times;</span>
                                 <span class="sr-only">Close</span>
                             </button>
-                            <h4 class="modal-title" id="detailsModalLabel">Contact
+                            <h4 class="modal-title" id="detailsModalLabel">Address
                                 Details</h4>
                         </div>
                         <div class="modal-body">
-                            <h3 id="contact-id"></h3>
+                            <h3 id="address-id"></h3>
                             <table class="table table-bordered">
                                 <tr>
                                     <th>First Name:</th>
@@ -161,10 +162,10 @@
                                 <span aria-hidden="true">&times;</span>
                                 <span class="sr-only">Close</span></button>
                             <h4 class="modal-title" id="detailsModalLabel">Edit
-                                Contact</h4>
+                                Address</h4>
                         </div>
                         <div class="modal-body">
-                            <h3 id="contact-id"></h3>
+                            <h3 id="address-id"></h3>
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label for="edit-first-name" class="col-md-4 control-label">
@@ -230,7 +231,7 @@
                                                 data-dismiss="modal">
                                             Cancel
                                         </button>
-                                        <input type="hidden" id="edit-contact-id">
+                                        <input type="hidden" id="edit-address-id">
                                     </div>
                                 </div>
                             </form>
@@ -244,6 +245,14 @@
         <!-- placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    
+    <sec:authorize access="hasRole('ROLE_USER')">
+        <script src="${pageContext.request.contextPath}/js/useraddressList.js"></script>
+    </sec:authorize>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
         <script src="${pageContext.request.contextPath}/js/addressList.js"></script>
+    </sec:authorize>
+        
+        <!--<script src="${pageContext.request.contextPath}/js/addressList.js"></script>-->
     </body>
 </html>

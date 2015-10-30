@@ -44,7 +44,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <intercept-url pattern="/add" access="ROLE_ADMIN" />
         <intercept-url pattern="/adresss" access="ROLE_ADMIN" />
         <intercept-url pattern="/address" access="ROLE_ADMIN" />
-        <intercept-url pattern="/address/**" access="ROLE_ADMIN" />
+        <!--<intercept-url pattern="/address/**" access="ROLE_ADMIN" />-->
         <!-- #3f - Access to all other controller endpoints require user role -->
         <intercept-url pattern="/**" access="ROLE_USER" />
     </http>

@@ -9,6 +9,8 @@
 <%@taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@taglib prefix = "s" uri="http://www.springframework.org/tags"  %>
 <%@taglib prefix = "fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix = "sec" uri="http://www.springframework.org/security/tags" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -46,12 +48,12 @@
         <div class="container">
             <h1 class = "col-md-offset-3 col-md-6">Address Book</h1>
             <br><br>
-            
+
             <div id="topbar">
                 <%@include file="addressheader.jsp" %>
             </div>
         </div>
-                         <div class="container">
+        <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <h2>Search By Zip</h2>
@@ -110,11 +112,11 @@
                                 <span aria-hidden="true">&times;</span>
                                 <span class="sr-only">Close</span>
                             </button>
-                            <h4 class="modal-title" id="detailsModalLabel">Contact
+                            <h4 class="modal-title" id="detailsModalLabel">Address
                                 Details</h4>
                         </div>
                         <div class="modal-body">
-                            <h3 id="contact-id"></h3>
+                            <h3 id="address-id"></h3>
                             <table class="table table-bordered">
                                 <tr>
                                     <th>First Name:</th>
@@ -132,7 +134,7 @@
                                     <th>City:</th>
                                     <td id="address-city"></td>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <th>State:</th>
                                     <td id="address-state"></td>
                                 </tr>
@@ -152,7 +154,7 @@
             </div>
 
             <!-- Edit Modal -->
-           <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
                  aria-labelledby="detailsModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -161,10 +163,10 @@
                                 <span aria-hidden="true">&times;</span>
                                 <span class="sr-only">Close</span></button>
                             <h4 class="modal-title" id="detailsModalLabel">Edit
-                                Contact</h4>
+                                Address</h4>
                         </div>
                         <div class="modal-body">
-                            <h3 id="contact-id"></h3>
+                            <h3 id="address-id"></h3>
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label for="edit-first-name" class="col-md-4 control-label">
@@ -202,7 +204,7 @@
                                                placeholder="City">
                                     </div>
                                 </div>
-                                  <div class="form-group">
+                                <div class="form-group">
                                     <label for="edit-state" class="col-md-4 control-label">
                                         State:
                                     </label>
@@ -230,7 +232,7 @@
                                                 data-dismiss="modal">
                                             Cancel
                                         </button>
-                                        <input type="hidden" id="edit-contact-id">
+                                        <input type="hidden" id="edit-address-id">
                                     </div>
                                 </div>
                             </form>
@@ -244,6 +246,12 @@
         <!-- placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
+    <sec:authorize access="hasRole('ROLE_USER')">
+        <script src="${pageContext.request.contextPath}/js/useraddressList.js"></script>
+    </sec:authorize>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
         <script src="${pageContext.request.contextPath}/js/addressList.js"></script>
-    </body>
+    </sec:authorize>
+</body>
 </html>
