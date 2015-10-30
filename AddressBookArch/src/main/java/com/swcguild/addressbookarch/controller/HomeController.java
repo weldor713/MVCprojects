@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author apprentice
  */
 public class HomeController {
-    
+
     private AddressBookDao dao;
 
     @Inject
@@ -83,6 +83,16 @@ public class HomeController {
     public List<Address> getAllAddresss() {
 // get all of the Addresss from the data layer
         return dao.getAllAddresss();
+    }
+
+    // This method will be invoked by Spring MVC when it sees a request for
+// ContactListMVC/mainAjaxPage.
+    @RequestMapping(value = {"/mainAjaxPage"}, method = RequestMethod.GET)
+    public String displayMainAjaxPage() {
+// This method does nothing except return the logical name of the
+// view component (/jsp/home.jsp) that should be invoked in response
+// to this request.
+        return "mainAjaxPage";
     }
 
 }

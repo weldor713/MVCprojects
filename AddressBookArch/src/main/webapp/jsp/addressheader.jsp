@@ -36,7 +36,10 @@ and open the template in the editor.
                         <div id="navbarCollapse" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li role="presentation" class="active">
-                                    <a href="${pageContext.request.contextPath}/home">Home/List All</a>
+                                    <a href="${pageContext.request.contextPath}/home">Home</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="${pageContext.request.contextPath}/mainAjaxPage">List All</a>
                                 </li>
                                 <li role="presentation">
                                     <a href="${pageContext.request.contextPath}/add">Add Address</a>
@@ -58,6 +61,10 @@ and open the template in the editor.
                                             <a href="${pageContext.request.contextPath}/byzip">By Zip</a>
                                         </li>
                                     </ul>
+                                </li>
+                                <li role="presentation">
+                                    <a href="${pageContext.request.contextPath}/j_spring_security_logout">Log
+                                        Out</a>
                                 </li>
                                 <li></li>
 
