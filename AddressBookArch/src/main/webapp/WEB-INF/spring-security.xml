@@ -35,11 +35,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <!-- #3d - Go back to home page when user logs out -->
         <logout logout-success-url="/home" />
         <!-- #3e - Access to these endpoints require admin role -->
-        <intercept-url pattern="/displayEditContactFormNoAjax" access="ROLE_ADMIN" />
-        <intercept-url pattern="/displayNewContactFormNoAjax" access="ROLE_ADMIN" />
-        <intercept-url pattern="/addNewContactNoAjax" access="ROLE_ADMIN" />
-        <intercept-url pattern="/deleteContactNoAjax" access="ROLE_ADMIN" />
-        <intercept-url pattern="/editContactNoAjax" access="ROLE_ADMIN" />
         <!--<intercept-url pattern="/mainAjaxPage" access="ROLE_ADMIN" />-->
         <intercept-url pattern="/add" access="ROLE_ADMIN" />
         <intercept-url pattern="/adresss" access="ROLE_ADMIN" />

@@ -86,7 +86,7 @@ public class HomeController {
     }
 
     // This method will be invoked by Spring MVC when it sees a request for
-// ContactListMVC/mainAjaxPage.
+// AddressBook/mainAjaxPage.
     @RequestMapping(value = {"/mainAjaxPage"}, method = RequestMethod.GET)
     public String displayMainAjaxPage() {
 // This method does nothing except return the logical name of the
