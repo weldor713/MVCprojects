@@ -13,37 +13,47 @@ $(document).ready(function () {
 });
 
 $('#add-one').click(function () {
+    document.getElementById("change").innerHTML = "Change Slot";
+    document.getElementById("messagewindow").innerHTML = "";
     var adder = 1;
     money = parseFloat(money) + parseFloat(adder);
     var moneyTwoDec = parseFloat(money).toFixed(2);
-    var total = "Total Money: $ " + moneyTwoDec;
+    var total = "Available Money: $ " + moneyTwoDec;
     document.getElementById("show-bank").innerHTML = total;
 });
 $('#add-five').click(function () {
+    document.getElementById("change").innerHTML = "Change Slot";
+    document.getElementById("messagewindow").innerHTML = "";
     var adder = 5;
     money = parseFloat(money) + parseFloat(adder);
     var moneyTwoDec = parseFloat(money).toFixed(2);
-    var total = "Total Money: $ " + moneyTwoDec;
+    var total = "Available Money: $ " + moneyTwoDec;
     document.getElementById("show-bank").innerHTML = total;
 });
 $('#add-ten').click(function () {
+    document.getElementById("change").innerHTML = "Change Slot";
+    document.getElementById("messagewindow").innerHTML = "";
     var adder = 10;
     money = parseFloat(money) + parseFloat(adder);
     var moneyTwoDec = parseFloat(money).toFixed(2);
-    var total = "Total Money: $ " + moneyTwoDec;
+    var total = "Available Money: $ " + moneyTwoDec;
     document.getElementById("show-bank").innerHTML = total;
 });
-$('#foodchoice').click(function (e) {
+$('#cashout').click(function (e) {
     e.preventDefault();
     e.stopPropagation();
-    var moneyTwoDec = parseFloat(money).toFixed(2);
-    var total = "Total Change: $ " + moneyTwoDec;
-    document.getElementById("change").innerHTML = total;
-    money = 0;
-    moneyTwoDec = parseFloat(money).toFixed(2);
-    total = "Total Money: $ " + moneyTwoDec;
-    document.getElementById("show-bank").innerHTML = total;
-    return false;
+    document.getElementById("messagewindow").innerHTML = "";
+    money = money * 100;
+    var changestring = "/change/" + money;
+    $.ajax({
+        url: changestring
+    }).success(function (data, status) {
+        document.getElementById("change").innerHTML = data;
+        money = 0;
+        var total = "Available Money: $ " + money;
+        document.getElementById("show-bank").innerHTML = total;
+        loadItems();
+    });
 });
 
 function loadItems() {
@@ -77,7 +87,7 @@ function fillItemTable(itemList, status) {
             var thewords2 = ("Qty Left: " + item.qty);
             btn.setAttribute("class", "clickme");
             btn.setAttribute("id", bttnname);
-            btn.setAttribute("value", buttonid)
+            btn.setAttribute("value", buttonid);
             btn.textContent = bttnname;
             cTable.append($('<td class = "inline-block">')
                     .append($(btn)
@@ -93,7 +103,8 @@ function fillItemTable(itemList, status) {
     });
     $('.clickme').click(function () {
         clickid = this.value;
-                checkPrice();
+        bttnname = this.id;
+        checkPrice();
     });
 
 }
@@ -107,6 +118,7 @@ function vendItem() {
         type: 'GET',
         url: 'vend/' + clickid
     }).success(function (item) {
+        document.getElementById("messagewindow").innerHTML = "You have received a " + bttnname;
         loadItems();
     })
 }
@@ -125,7 +137,7 @@ function checkPrice() {
             vendItem();
         }
         else {
-//            Show message saying no money!
+            document.getElementById("messagewindow").innerHTML = "You don't have enougn money!";
         }
     });
 }

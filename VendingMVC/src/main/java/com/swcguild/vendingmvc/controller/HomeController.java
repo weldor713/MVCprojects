@@ -6,6 +6,7 @@
 package com.swcguild.vendingmvc.controller;
 
 import com.swcguild.vendingmvc.dao.VendDao;
+import com.swcguild.vendingmvc.model.Change;
 import com.swcguild.vendingmvc.model.Item;
 import java.util.List;
 import javax.inject.Inject;
@@ -38,6 +39,14 @@ public class HomeController {
         return "home";
     }
 
+    @RequestMapping(value = "/change/{amount}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getChange(@PathVariable("amount") double amount) {
+        Change change = new Change();
+        String returnChange = change.makeChange(amount);
+        return returnChange;
+    }
+
     @RequestMapping(value = "/check/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Item checkItem(@PathVariable("id") int id) {
@@ -45,13 +54,13 @@ public class HomeController {
         Item vItem = dao.getItemById(id);
         return vItem;
     }
-    
+
     @RequestMapping(value = "/vend/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Item vendItem(@PathVariable("id") int id) {
         Item vItem = dao.getItemById(id);
         int qty = vItem.getQty();
-        qty = qty-1;
+        qty = qty - 1;
         vItem.setQty(qty);
         dao.updateItem(vItem);
         return dao.getItemById(id);
@@ -73,7 +82,6 @@ public class HomeController {
 //// remove the Item associated with the given id from the data layer
 //        dao.updateItem(id);
 //    }
-
 //    @RequestMapping(value = "/vend/{id}", method = RequestMethod.PUT)
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    public void putItem(@PathVariable("id") int id, @RequestBody Item item) {
@@ -85,7 +93,6 @@ public class HomeController {
 //// update the item
 //        dao.updateItem(item);
 //    }
-
     @RequestMapping(value = "/vending", method = RequestMethod.GET)
     @ResponseBody
     public List<Item> getAllItems() {
